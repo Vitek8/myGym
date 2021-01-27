@@ -8,5 +8,9 @@ trained_models
 /.vscode
 build/
 **/dtdseamless/
+/ros_support/build
+/ros_support/devel
+/ros_support/logs
+/ros_support/.catkin_tools
 **/.directory
 /vae_datasets/

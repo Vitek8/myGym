@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from stable_baselines import results_plotter
 import os
+import pybullet
 
 class Reward:
     """
@@ -83,16 +84,52 @@ class DistanceReward(Reward):
         kuka = observation[6:9] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3])/2):-3]
         
         reward = self.calc_dist_diff(cube, kuka)
-        #print("base reward", reward)
         reward -= self.calc_penalty(kuka, bus)
 
-        #print("penalized reward", reward)
 
-        #exit()
+        if pybullet.getContactPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid):
+            print("touch")
+            self.rewards_history.append(reward-5)
+            self.env.episode_failed = True
+            self.env.episode_over = True
+            return -5
+
+        if pybullet.getClosestPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid, distance=0.05):
+        # if pybullet.getClosestPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid, distance=0.15):
+            print("too close")
+            # reward -= self.calc_penalty(kuka, bus)
+            # exit(pybullet.getClosestPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid, distance=0.01))            
+            self.rewards_history.append(reward-5)
+            self.env.episode_failed = True
+            self.env.episode_over = True
+            return -5
+
+        if pybullet.getClosestPoints(bodyA=self.env.env_objects[0].uid, bodyB=self.env.robot.robot_uid, distance=0.05):
+            self.env.distractor_movable = False
+
+        if pybullet.getContactPoints(bodyA=self.env.env_objects[0].uid, bodyB=self.env.robot.robot_uid):
+            self.env.distractor_movable = False
+
         self.task.check_distance_threshold(observation=observation)
 
         self.rewards_history.append(reward)
         return reward
+
+        # try:
+        # several touch penalizations possible:
+
+        # prohibited touch, penalization for getting closer, than 0.3      DONE (bad, doesnt try to reach the goal, only avoids distractor)
+        # prohibited touch                                                 DONE (total failure, did not stop touching in first 50000 tries stopped after... DIDNT)
+        # prohibited touch, encouraged touch of goal(2.5)
+        # prohibited touch, encouraged touch of goal(2.5) (multiple)
+
+        # only one touch penalization possible:
+
+        # prohibited touch, penalization for getting closer, than 0.3
+        # prohibited touch
+        # prohibited touch, encouraged touch of goal(2.5)
+        # prohibited touch, encouraged touch of goal(2.5) (multiple)
+
 
     def reset(self):
         """
@@ -117,7 +154,7 @@ class DistanceReward(Reward):
         if self.prev_robot is None and self.prev_distractor is None:
            self.prev_robot = robot
            self.prev_distractor = distractor
-        self.prev_diff = self.task.calc_distance(self.prev_robot, self.prev_distractor)
+        prev_dist_diff = self.task.calc_distance(self.prev_robot, self.prev_distractor)
 
         current_diff = self.task.calc_distance(robot, distractor)
 
@@ -138,16 +175,20 @@ class DistanceReward(Reward):
         # return 0
 
 
+        if current_diff < 0.3:
+            norm_diff = (prev_dist_diff - current_dist_diff) / prev_dist_diff
 
-        norm_diff = (self.prev_diff - current_diff) / self.prev_diff
+            self.prev_robot = robot
+            self.prev_distractor = distractor
+            # if current_diff < 0.15:
+            #     self.env.episode_over = True
+            #     self.env.episode_failed = True
+            #     reward -= norm_diff
 
-        self.prev_robot = robot
-        self.prev_distractor = distractor
-        # if current_diff < 0.15:
-        #     self.env.episode_over = True
-        #     self.env.episode_failed = True
-        #     reward -= norm_diff
-        return norm_diff/2
+            # print("penalize")
+
+            return norm_diff/2.5
+        return 0
 
     def calc_dist_diff(self, obj1_position, obj2_position):
         """

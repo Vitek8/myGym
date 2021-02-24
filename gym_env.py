@@ -183,9 +183,10 @@ class GymEnv(CameraEnv):
                                                         'target': [[-0.0, -1.05, 1.0], [0.0, 0.55, 1.3], [1.4, -0.75, 0.9], [-1.3, -0.75, 0.9], [0.0, 0.15, 2.1]]},
                                             'boarders':[-0.7, 0.8, 0.65, 0.65, 0.7, 1.4]}  }
         super(GymEnv, self).__init__(active_cameras=active_cameras, **kwargs)
-        self.i = 0
+        
         self.goal_position = []
         self.direction = 1
+        self.distractor_movable = True
 
     def _setup_scene(self):
         """
@@ -334,7 +335,6 @@ class GymEnv(CameraEnv):
         self._observation = self.get_observation()
         self.prev_gripper_position = self.robot.get_observation()[:3]
         # moje blbinky mimo logiku
-        self.i = 0
         self.goal_position
         self.direction = 1
         # moje blbinky mimo logiku
@@ -394,26 +394,22 @@ class GymEnv(CameraEnv):
             if obj.name == "bus":
                 x = np.random.uniform(low=-0.001, high=0.001)
                 y = np.random.uniform(low=-0.001, high=0.001)
-                # print(x,y)
-                # exit()
-                # if self.i == 300 or self.i == 600 or self.i == 900:
-                #     print("switch")
-                #     self.direction = -self.direction
+                
 
                 if obj.get_position()[0] < -0.7+0.12 or obj.get_position()[0] > 0.7-0.15:
-                    print("switch")
+                    # print("switch")
                     self.direction = -self.direction
+                    
+                if self.distractor_movable:
 
-                # "object_sampling_area":[-0.7, 0.7, 0.3, 0.9, 0.1, 0.1],
-                exit(obj.get_bounding_box())
-                if self.direction > 0:
-                    obj.move([0.003,0,0])
-                else:
-                    obj.move([-0.003,0,0])
-
-                self.i += 1
+                    if self.direction > 0:
+                        obj.move([0.003,0,0])
+                    else:
+                        obj.move([-0.003,0,0])
+                    
                 obj.draw_bounding_box()
-                
+            
+        # self.robot.draw_bounding_box()    
         self._observation = self.get_observation()
         if self.dataset:
             reward = 0
@@ -541,7 +537,8 @@ class GymEnv(CameraEnv):
                     0.3+abs(position_of_hand[1]+position_of_goal[1])/2,
                     0.1+abs(position_of_hand[2]+position_of_goal[2])/2]
         position = env_object.EnvObject.get_random_object_position([-0.7+0.12, 0.7-0.15, 0.4, 0.9, 0.1, 0.1])
-        orientation = [16,35,178,56]
+        # orientation = [16,35,178,56]
+        orientation = [0,0,50,1]
 
         # object_filename = self._get_random_urdf_filenames(1, distractor)
         object_filename = "/home/jonas/myGym/myGym/envs/objects/toys/urdf/bus.urdf"

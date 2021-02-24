@@ -31,11 +31,11 @@
     "max_episode_steps":1024,
     "algo_steps":1024,
     "steps":100000,
-    "pretrained_model":"/home/jonas/myGym/assignment/trained_models/distance_table_kuka_joints_gt_ppo2_77",
+    "pretrained_model":null,
     "multiprocessing":false,
     #Evaluation
-    "eval_freq":99999,
-    "eval_episodes":20,
+    "eval_freq":10000,
+    "eval_episodes":5,
     #Saving and logging
     "logdir": "/home/jonas/myGym/assignment/trained_models", 
     "record":0

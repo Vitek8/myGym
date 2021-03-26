@@ -14,13 +14,17 @@
     "robot_init":[0.0, 0.5, 0.5],
     #Task
     "task_type":"distance",
-    "task_objects":["cube_holes", "bus"],
+    // "task_objects":["cube_holes", "bus"],
+    "task_objects":["cube_holes"],
+    // "distractor":null,
+    "distractor": "bus",
     "used_objects": null,
     "color_dict": null,
-    "object_sampling_area":[-0.7, 0.7, 0.3, 0.9, 0.1, 0.1],
+    "object_sampling_area":[-0.6, 0.6, 0.3, 0.9, 0.1, 0.1],
     #Reward
     "reward_type":"gt",
-    "reward":"distance",
+    "reward":"distractor",
+    // "reward": "distance",
     "distance_type":"euclidean",
     "vae_path":null,
     "yolact_path":null,
@@ -28,14 +32,15 @@
     #Train
     "train_framework":"tensorflow",
     "algo":"ppo2",
-    "max_episode_steps":1024,
+    // "max_episode_steps":1024,
+    "max_episode_steps":2048,
     "algo_steps":1024,
-    "steps":100000,
+    "steps":500000,
     "pretrained_model":null,
     "multiprocessing":false,
     #Evaluation
     "eval_freq":10000,
-    "eval_episodes":5,
+    "eval_episodes":3,
     #Saving and logging
     "logdir": "/home/jonas/myGym/assignment/trained_models", 
     "record":0

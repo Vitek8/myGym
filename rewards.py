@@ -54,7 +54,6 @@ class Reward:
 class DistanceReward(Reward):
     """
     Reward class for reward signal calculation based on distance differences between 2 objects
-
     Parameters:
         :param env: (object) Environment, where the training takes place
         :param task: (object) Task that is being trained, instance of a class TaskModule
@@ -64,72 +63,22 @@ class DistanceReward(Reward):
         self.prev_obj1_position = None
         self.prev_obj2_position = None
 
-        self.prev_robot = None
-        self.prev_distractor = None
-
 
     def compute(self, observation):
         """
         Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
-
         Params:
             :param observation: (list) Observation of the environment
         Returns:
             :return reward: (float) Reward signal for the environment
         """
         observation = observation["observation"] if isinstance(observation, dict) else observation
-
-        cube = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
-        bus = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3])/2):-3]
-        kuka = observation[6:9] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3])/2):-3]
-        
-        reward = self.calc_dist_diff(cube, kuka)
-        reward -= self.calc_penalty(kuka, bus)
-
-
-        if pybullet.getContactPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid):
-            print("touch")
-            self.rewards_history.append(reward-5)
-            self.env.episode_failed = True
-            self.env.episode_over = True
-            return -5
-
-        if pybullet.getClosestPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid, distance=0.05):
-        # if pybullet.getClosestPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid, distance=0.15):
-            print("too close")
-            # reward -= self.calc_penalty(kuka, bus)
-            # exit(pybullet.getClosestPoints(bodyA=self.env.env_objects[-1].uid, bodyB=self.env.robot.robot_uid, distance=0.01))            
-            self.rewards_history.append(reward-5)
-            self.env.episode_failed = True
-            self.env.episode_over = True
-            return -5
-
-        if pybullet.getClosestPoints(bodyA=self.env.env_objects[0].uid, bodyB=self.env.robot.robot_uid, distance=0.05):
-            self.env.distractor_movable = False
-
-        if pybullet.getContactPoints(bodyA=self.env.env_objects[0].uid, bodyB=self.env.robot.robot_uid):
-            self.env.distractor_movable = False
-
+        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
+        o2 = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3])/2):-3]
+        reward = self.calc_dist_diff(o1, o2)
         self.task.check_distance_threshold(observation=observation)
-
         self.rewards_history.append(reward)
         return reward
-
-        # try:
-        # several touch penalizations possible:
-
-        # prohibited touch, penalization for getting closer, than 0.3      DONE (bad, doesnt try to reach the goal, only avoids distractor)
-        # prohibited touch                                                 DONE (total failure, did not stop touching in first 50000 tries stopped after... DIDNT)
-        # prohibited touch, encouraged touch of goal(2.5)
-        # prohibited touch, encouraged touch of goal(2.5) (multiple)
-
-        # only one touch penalization possible:
-
-        # prohibited touch, penalization for getting closer, than 0.3
-        # prohibited touch
-        # prohibited touch, encouraged touch of goal(2.5)
-        # prohibited touch, encouraged touch of goal(2.5) (multiple)
-
 
     def reset(self):
         """
@@ -138,62 +87,9 @@ class DistanceReward(Reward):
         self.prev_obj1_position = None
         self.prev_obj2_position = None
 
-        self.prev_robot = None
-        self.prev_distractor = None
-
-    def calc_penalty(self, robot, distractor):
-        """
-        Calculate change in the distance between 2 objects in previous and in current step. Normalize the change by the value of distance in previous step.
-
-        Params:
-            :param obj1_position: (list) Position of the first object
-            :param obj2_position: (list) Position of the second object
-        Returns:
-            :return norm_diff: (float) Normalized difference of distances between 2 objects in previsous and in current step
-        """
-        if self.prev_robot is None and self.prev_distractor is None:
-           self.prev_robot = robot
-           self.prev_distractor = distractor
-        prev_dist_diff = self.task.calc_distance(self.prev_robot, self.prev_distractor)
-
-        current_diff = self.task.calc_distance(robot, distractor)
-
-
-        #print(current_diff)
-        #if current_diff < 1:
-        #    current_diff = 1/current_diff
-        #penalty = (1/(current_diff**10000))+current_diff
-        #print("base penalty", penalty)
-        
-        # if current_diff < 0.3:
-        #     print("punish")
-        #     if current_diff < 1:
-        #         current_diff = 1/current_diff
-        #     penalty = (1/(current_diff**10))
-        #     return penalty
-            
-        # return 0
-
-
-        if current_diff < 0.3:
-            norm_diff = (prev_dist_diff - current_dist_diff) / prev_dist_diff
-
-            self.prev_robot = robot
-            self.prev_distractor = distractor
-            # if current_diff < 0.15:
-            #     self.env.episode_over = True
-            #     self.env.episode_failed = True
-            #     reward -= norm_diff
-
-            # print("penalize")
-
-            return norm_diff/2.5
-        return 0
-
     def calc_dist_diff(self, obj1_position, obj2_position):
         """
         Calculate change in the distance between 2 objects in previous and in current step. Normalize the change by the value of distance in previous step.
-
         Params:
             :param obj1_position: (list) Position of the first object
             :param obj2_position: (list) Position of the second object
@@ -212,8 +108,7 @@ class DistanceReward(Reward):
         self.prev_obj2_position = obj2_position
 
         return norm_diff
-
-
+        
 class ComplexDistanceReward(DistanceReward):
     """
     Reward class for reward signal calculation based on distance differences between 3 objects, e.g. 2 objects and gripper for complex tasks
@@ -280,7 +175,7 @@ class ComplexDistanceReward(DistanceReward):
 
         return norm_diff
 
-class AvoidReward(Reward):
+class DistractorReward(Reward):
     """
     Reward class for reward signal calculation based on distance differences between 2 objects
 
@@ -289,12 +184,18 @@ class AvoidReward(Reward):
         :param task: (object) Task that is being trained, instance of a class TaskModule
     """
     def __init__(self, env, task):
-        super(AvoidReward, self).__init__(env, task)
+        super(DistractorReward, self).__init__(env, task)
         self.prev_obj1_position = None
         self.prev_obj2_position = None
 
+        self.prev_robot = None
+        self.prev_distractor = None
 
-    def compute(self, observation, robot):
+        self.last_distances = []
+
+        self.penalty = 0
+
+    def compute(self, observation):
         """
         Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
 
@@ -304,13 +205,33 @@ class AvoidReward(Reward):
             :return reward: (float) Reward signal for the environment
         """
         observation = observation["observation"] if isinstance(observation, dict) else observation
-        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
-        o2 = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3])/2):-3]
-        reward = self.calc_dist_diff(o1, o2)
+        # exit(observation)
+        cube = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
+        bus = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3])/2):-3]
+        kuka = observation[6:9] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3])/2):-3]
+        
+        reward = self.calc_dist_diff(cube, kuka)
+        reward += self.calc_links(observation[9:], bus)
+        # reward -= self.calc_penalty(kuka, bus)
+        
+        contact_points = [self.env.p.getContactPoints(self.env.robot.robot_uid, self.env.env_objects[0].uid, x, -1) for x in range(0,self.env.robot.end_effector_index+1)]
+        for p in contact_points:
+            if p:
+                self.env.distractor_movable = False
+                reward+=1
+                break
+
+        contact_points = [self.env.p.getContactPoints(self.env.robot.robot_uid, self.env.env_objects[-1].uid, x, -1) for x in range(0,self.env.robot.end_effector_index+1)]
+        for p in contact_points:
+            if p:
+                r = abs(self.calc_penalty(kuka, bus))
+                reward -= r
+                break
+
+        # if kuka under table penalize + fail
+
         self.task.check_distance_threshold(observation=observation)
-        #exit(self.calc_dist_diff(o1, o2))
-        #if self.task.calc_distance(o1, robot) == 0:
-        #   exit("huhulála")
+
         self.rewards_history.append(reward)
         return reward
 
@@ -320,6 +241,74 @@ class AvoidReward(Reward):
         """
         self.prev_obj1_position = None
         self.prev_obj2_position = None
+
+        self.prev_robot = None
+        self.prev_distractor = None
+
+        self.penalty = 0
+        self.env.distractor_movable = True
+
+        self.last_distances = [None]*11
+
+    def calc_penalty(self, robot, distractor):
+        """
+        Calculate change in the distance between 2 objects in previous and in current step. Normalize the change by the value of distance in previous step.
+
+        Params:
+            :param obj1_position: (list) Position of the first object
+            :param obj2_position: (list) Position of the second object
+        Returns:
+            :return norm_diff: (float) Normalized difference of distances between 2 objects in previsous and in current step
+        """
+
+        if self.prev_robot is None and self.prev_distractor is None:
+            self.prev_robot = robot
+            self.prev_distractor = distractor
+        self.prev_diff = self.task.calc_distance(self.prev_robot, self.prev_distractor)
+
+        current_diff = self.task.calc_distance(robot, distractor)
+        norm_diff = (self.prev_diff - current_diff) / self.prev_diff
+
+        self.prev_robot = robot
+        self.prev_distractor = distractor
+        self.penalty += 1
+
+        if self.penalty > 19:
+            self.env.episode_failed = True
+            self.env.episode_over = True
+            return 1
+
+        return norm_diff
+
+    def calc_links(self, links, distractor):
+        reward = 0.3
+        # rewards = []
+        distances = self.last_distances
+        i = 0
+        j = 0
+
+        for item in range(11):
+            dist = self.task.calc_distance(links[i:i+3], distractor)
+            if distances[j]:
+                # reward += (distances[j] - dist) / distances[j]
+                candidate = (distances[j] - dist) / distances[j]
+                if abs(candidate) < reward:
+                    reward = candidate
+            self.last_distances[j] = dist
+
+            i += 3
+            j += 1
+
+        # if abs(reward) < 0.3:
+            # return reward
+
+        # if reward > 0:
+        #     if reward > 0.1:
+        #         return -reward/1000
+        
+        if reward == 0.3:
+            return 0
+        return -reward/500
 
     def calc_dist_diff(self, obj1_position, obj2_position):
         """
@@ -343,6 +332,7 @@ class AvoidReward(Reward):
         self.prev_obj2_position = obj2_position
 
         return norm_diff
+
 
 class SparseReward(Reward):
     """

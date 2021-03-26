@@ -106,18 +106,19 @@ class TaskModule():
             self.visualize_2dvu(recons) if self.env.visualize == 1 else None
         else:
             for env_object in self.env.task_objects:
-                # print(env_object.name)
-                # print(self.vision_module.get_obj_position(env_object,self.image,self.depth))
                 obj_positions.append(self.vision_module.get_obj_position(env_object,self.image,self.depth))
                 if self.reward_type == '6dvs' and self.task_type != 'reach' and env_object != self.env.task_objects[-1]:
                     obj_orientations.append(self.vision_module.get_obj_orientation(env_object,self.image))
-            
-            # print(obj_positions)
+                    
+        if self.env.has_distractor:
+            obj_positions.append(self.env.robot.get_all_links_observation())
+        # else:
+        #     obj_positions.append(self.env.robot.get_observation())
+
+        # print(obj_positions)
         # exit()
         obj_positions[len(obj_orientations):len(obj_orientations)] = obj_orientations
         self._observation = np.array(sum(obj_positions, []))
-        # exit(self._observation)
-        # exit()
         return self._observation
 
     def check_vision_failure(self):
@@ -215,6 +216,7 @@ class TaskModule():
         Returns: 
             :return dist: (float) Distance between 2 float arrays
         """
+        
         if self.distance_type == "euclidean":
             dist = np.linalg.norm(np.asarray(obj1) - np.asarray(obj2))
         elif self.distance_type == "manhattan":

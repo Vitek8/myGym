@@ -1,7 +1,7 @@
 from myGym.envs import robot, env_object
 from myGym.envs import task as t
 from myGym.envs.base_env import CameraEnv
-from myGym.envs.rewards import DistanceReward, ComplexDistanceReward, SparseReward
+from myGym.envs.rewards import DistanceReward, ComplexDistanceReward, SparseReward, DistractorReward
 import pybullet
 import time
 import numpy as np
@@ -63,6 +63,10 @@ class GymEnv(CameraEnv):
                  robot_init_joint_poses=[],
                  task_type='reach',
                  task_objects=["virtual_cube_holes"],
+
+                 distractor=None,
+                 distractor_movable = True,
+
                  reward_type='gt',
                  reward = 'distance',
                  distance_type='euclidean',
@@ -97,6 +101,10 @@ class GymEnv(CameraEnv):
         if dataset:
             task_objects = []
         self.task_objects_names = task_objects
+
+        self.has_distractor = False
+        self.distractor = distractor
+
         self.reward_type = reward_type
         self.distance_type = distance_type
         self.task = t.TaskModule(task_type=self.task_type,
@@ -106,15 +114,23 @@ class GymEnv(CameraEnv):
                                  yolact_path=yolact_path,
                                  yolact_config=yolact_config,
                                  distance_type=self.distance_type,
-                                 env=self)                   
+                                 env=self)  
+
         if reward == 'distance':
             self.reward = DistanceReward(env=self, task=self.task)
         elif reward == "complex_distance":
             self.reward = ComplexDistanceReward(env=self, task=self.task)
         elif reward == 'sparse':
             self.reward = SparseReward(env=self, task=self.task)
-        elif reward == 'avoid':
-            self.reward = AvoidReward(env=self, task=self.task)
+        elif reward == 'distractor':
+            # mess for distractor
+            self.has_distractor = True
+            self.distractor_movable = distractor_movable # can distractor move? (True/False)
+            self.goal_position = []             # position of object to reach (for meaningfull distractor placement)
+            self.direction = 1                  # -1 => moves left, 1 => moves right (or the other way) 
+            
+            self.reward = DistractorReward(env=self, task=self.task)
+
         self.dataset = dataset
         self.obs_space = obs_space
         self.visualize = visualize
@@ -183,10 +199,6 @@ class GymEnv(CameraEnv):
                                                         'target': [[-0.0, -1.05, 1.0], [0.0, 0.55, 1.3], [1.4, -0.75, 0.9], [-1.3, -0.75, 0.9], [0.0, 0.15, 2.1]]},
                                             'boarders':[-0.7, 0.8, 0.65, 0.65, 0.7, 1.4]}  }
         super(GymEnv, self).__init__(active_cameras=active_cameras, **kwargs)
-        
-        self.goal_position = []
-        self.direction = 1
-        self.distractor_movable = True
 
     def _setup_scene(self):
         """
@@ -258,6 +270,11 @@ class GymEnv(CameraEnv):
                                                   "desired_goal": spaces.Box(low=-10, high=10, shape=(goaldim,))})
         else:
             observationDim = self.task.obsdim
+            
+            if self.has_distractor:
+                observationDim = 45
+                # asiblbost
+            
             observation_high = np.array([100] * observationDim)
             self.observation_space = spaces.Box(-observation_high,
                                                 observation_high)
@@ -322,7 +339,9 @@ class GymEnv(CameraEnv):
         else:
             # for obj_name in self.task_objects_names:
             self.task_objects = self._randomly_place_objects(1, [self.task_objects_names[0]], random_pos)
-            self.task_objects.append(self.place_distractor("bus"))
+            # self.task_objects.append(self.place_distractor("bus"))
+            if self.has_distractor:
+                self.task_objects.append(self.place_distractor(self.distractor))
                 # exit(self.task_objects)
                 # self.task_objects.append(self._randomly_place_objects(1, [obj_name], random_pos)[0])
 
@@ -390,26 +409,9 @@ class GymEnv(CameraEnv):
         action = self._rescale_action(action)
         self._apply_action_robot(action)
         
-        for obj in self.env_objects:
-            if obj.name == "bus":
-                x = np.random.uniform(low=-0.001, high=0.001)
-                y = np.random.uniform(low=-0.001, high=0.001)
+        if self.has_distractor:
+            self.execute_distractor_step(self.distractor)
                 
-
-                if obj.get_position()[0] < -0.7+0.12 or obj.get_position()[0] > 0.7-0.15:
-                    # print("switch")
-                    self.direction = -self.direction
-                    
-                if self.distractor_movable:
-
-                    if self.direction > 0:
-                        obj.move([0.003,0,0])
-                    else:
-                        obj.move([-0.003,0,0])
-                    
-                obj.draw_bounding_box()
-            
-        # self.robot.draw_bounding_box()    
         self._observation = self.get_observation()
         if self.dataset:
             reward = 0
@@ -460,7 +462,6 @@ class GymEnv(CameraEnv):
     def _randomly_place_objects(self, n, object_names=None, random_pos=True, pos=[0.6,0.6,1.2], orn=[0,0,0,1]):
         """
         Place dynamic objects to the scene randomly
-
         Parameters:
             :param n: (int) Number of objects to place in the scene
             :param object_names: (list of strings) Objects that may be placed to the scene
@@ -471,31 +472,18 @@ class GymEnv(CameraEnv):
         env_objects = []
         objects_filenames = self._get_random_urdf_filenames(n, object_names)
         for object_filename in objects_filenames:
-            if "bus" in object_filename:
-                # will be placed on its own
-                pass
             if random_pos:
                 pos = env_object.EnvObject.get_random_object_position(
                     self.objects_area_boarders)
                 #orn = env_object.EnvObject.get_random_object_orientation()
                 orn = [0, 0, 0, 1]
-                fixed = False
-                for x in ["target", "crate", "bin", "box", "trash"]:
-                    if x in object_filename:
-                        fixed = True
-                        pos[2] = 0
-
-                self.goal_position = pos
-
-                object = env_object.EnvObject(object_filename, pos, orn, pybullet_client=self.p, fixed=fixed)
-                
-                # if object.name == "bus":
-                #     self.place_distractor(object)
-
-            else:
-                if "bus" not in object_filename:
-                    object = env_object.EnvObject(
-                        object_filename, pos, orn, pybullet_client=self.p)
+            fixed = False
+            for x in ["target", "crate", "bin", "box", "trash"]:
+                if x in object_filename:
+                    fixed = True
+                    pos[2] = 0.05
+            self.goal_position = pos
+            object = env_object.EnvObject(object_filename, pos, orn, pybullet_client=self.p, fixed=fixed)
             if self.color_dict:
                 object.set_color(self.color_of_object(object))
             env_objects.append(object)
@@ -532,20 +520,20 @@ class GymEnv(CameraEnv):
         position_of_goal = self.goal_position
 
         # get position in the middle
-        # "object_sampling_area":[-0.7+0.12, 0.7-0.15, 0.3, 0.9, 0.1, 0.1],
+        # "object_sampling_area":[-0.7+0.12, 0.7-0.15, 0.3, 0.9, 0.1, 0.1],  (just a note)
         position = [abs(position_of_hand[0]+position_of_goal[0])/2,
                     0.3+abs(position_of_hand[1]+position_of_goal[1])/2,
                     0.1+abs(position_of_hand[2]+position_of_goal[2])/2]
         position = env_object.EnvObject.get_random_object_position([-0.7+0.12, 0.7-0.15, 0.4, 0.9, 0.1, 0.1])
-        # orientation = [16,35,178,56]
-        orientation = [0,0,50,1]
-
+        orientation = [0,0,50,50]
+        
         # object_filename = self._get_random_urdf_filenames(1, distractor)
+        # its hardcoded, can be changed to version above
         object_filename = "/home/jonas/myGym/myGym/envs/objects/toys/urdf/bus.urdf"
          
         object = env_object.EnvObject(object_filename, position, orientation, pybullet_client=self.p)
         object.move([0,0,0]) # turn off gravity
-        object.draw_bounding_box()
+        # object.draw_bounding_box()
         
         if self.color_dict:
             object.set_color(self.color_of_object(object))
@@ -553,3 +541,25 @@ class GymEnv(CameraEnv):
         # env_objects.append(object)
 
         return object
+
+    def execute_distractor_step(self, name):
+        for obj in self.env_objects:
+            if obj.name == name: # if is distractor
+                
+                # for random movement speed, if the arm gets good with constant one
+                # x = np.random.uniform(low=0.001, high=0.003)
+                # y = np.random.uniform(low=0.001, high=0.003)
+                
+                # if gets too close to edge of table, switches direction
+                # so it always stays above table
+                # the numbers were obtained by guess, try, give up, method
+                if obj.get_position()[0] < -0.7+0.12 or obj.get_position()[0] > 0.7-0.15:
+                    self.direction = -self.direction
+
+                # this is called every step, so the value actually doesnt represent movement, but speed
+                # in direction of X(or Y im not sure) axis 
+                if self.distractor_movable:
+                    if self.direction > 0:
+                        obj.move([0.003,0,0])
+                    else:
+                        obj.move([-0.003,0,0])

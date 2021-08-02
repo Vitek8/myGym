@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="test">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bus.urdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/source/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/conf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/source/user_guide/tutorial_parametric.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/user_guide/tutorial_parametric.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env_object.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gym_env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/configs/train.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/configs/train_example.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train_example.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/configs/train_gt_push.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train_gt_push.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/configs/train_vae_reach.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train_vae_reach.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/env_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/env_object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/gym_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/gym_env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/objects/assembly/urdf/cube_holes.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/objects/assembly/urdf/cube_holes.urdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/rewards.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rewards.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/robot.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/robot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/collision/drawer.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/collision/drawer.urdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/collision/table.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/collision/table.urdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/visual/drawer.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/visual/drawer.urdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/visual/table.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/visual/table.urdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/envs/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myGym/train_parallel.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/train_parallel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rewards.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/task.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" />
+    <list default="true" id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="adding angle coefficient and angle rewarding">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/my_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/my_config.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +91,7 @@
       <workItem from="1627662016454" duration="3130000" />
       <workItem from="1627715977288" duration="11269000" />
       <workItem from="1627892306222" duration="140000" />
-      <workItem from="1627893476928" duration="5762000" />
+      <workItem from="1627893476928" duration="8398000" />
     </task>
     <task id="LOCAL-00001" summary="reward update">
       <created>1627894519713</created>
@@ -134,7 +107,28 @@
       <option name="project" value="LOCAL" />
       <updated>1627895500987</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="initial commit">
+      <created>1627900928529</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1627900928529</updated>
+    </task>
+    <task id="LOCAL-00004" summary="initial commit">
+      <created>1627901083252</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1627901083252</updated>
+    </task>
+    <task id="LOCAL-00005" summary="adding angle coefficient and angle rewarding">
+      <created>1627903436562</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1627903436562</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,6 +152,8 @@
     </ignored-roots>
     <MESSAGE value="reward update" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="initial commit" />
+    <MESSAGE value="adding angle coefficient and angle rewarding" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding angle coefficient and angle rewarding" />
   </component>
 </project>

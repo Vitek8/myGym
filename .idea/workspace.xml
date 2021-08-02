@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="test">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bus.urdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/source/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/conf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/source/user_guide/tutorial_parametric.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/user_guide/tutorial_parametric.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env_object.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/environment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym_env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/configs/train.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/configs/train_example.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train_example.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/configs/train_gt_push.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train_gt_push.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/configs/train_vae_reach.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/configs/train_vae_reach.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/env_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/env_object.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/gym_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/gym_env.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/objects/assembly/urdf/cube_holes.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/objects/assembly/urdf/cube_holes.urdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/rewards.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rewards.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/robot.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/robot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/collision/drawer.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/collision/drawer.urdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/collision/table.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/collision/table.urdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/visual/drawer.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/visual/drawer.urdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/rooms/visual/table.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/rooms/visual/table.urdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/train_parallel.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/train_parallel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rewards.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="72694439-7e63-4d04-914d-97b8e8939de4" />
+        <option name="url" value="https://github.com/incognite-lab/myGym.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="ProjectId" id="1vfKVSgTCMAtgBrexiqYdx2PDDM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../myGym_fork" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/myGym/envs" />
+      <recent name="$PROJECT_DIR$/myGym" />
+      <recent name="$PROJECT_DIR$/myGym/envs/objects/assembly/stl" />
+      <recent name="$PROJECT_DIR$/myGym/envs/objects/assembly/urdf" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/myGym" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="" />
+      <created>1626947731014</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626947731014</updated>
+      <workItem from="1626947741979" duration="140000" />
+      <workItem from="1626948028573" duration="2873000" />
+      <workItem from="1626954072708" duration="604000" />
+      <workItem from="1626956020078" duration="1762000" />
+      <workItem from="1626957802614" duration="50129000" />
+      <workItem from="1627055511511" duration="770000" />
+      <workItem from="1627290939313" duration="23132000" />
+      <workItem from="1627375310296" duration="27827000" />
+      <workItem from="1627461516717" duration="16000" />
+      <workItem from="1627464617622" duration="1114000" />
+      <workItem from="1627465777512" duration="17089000" />
+      <workItem from="1627548169754" duration="24299000" />
+      <workItem from="1627630621331" duration="18482000" />
+      <workItem from="1627662016454" duration="3130000" />
+      <workItem from="1627715977288" duration="11269000" />
+      <workItem from="1627892306222" duration="140000" />
+      <workItem from="1627893476928" duration="5762000" />
+    </task>
+    <task id="LOCAL-00001" summary="reward update">
+      <created>1627894519713</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1627894519713</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test">
+      <created>1627895500987</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1627895500987</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/myGym/gnome-shell-extension-freon" />
+    </ignored-roots>
+    <MESSAGE value="reward update" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
+  </component>
+</project>

@@ -1,3 +1,4 @@
+import math
 from myGym.envs.vision_module import VisionModule
 import matplotlib.pyplot as plt
 import pybullet as p
@@ -16,13 +17,14 @@ class TaskModule():
 
     Parameters:
         :param task_type: (string) Type of learned task (reach, push, ...)
+        :param num_subgoals: (int) Number of subgoals in task
         :param task_objects: (list of strings) Objects that are relevant for performing the task
         :param reward_type: (string) Type of reward signal source (gt, 3dvs, 2dvu)
         :param distance_type: (string) Way of calculating distances (euclidean, manhattan)
         :param logdir: (string) Directory for logging
         :param env: (object) Environment, where the training takes place
     """
-    def __init__(self, task_type='reach', task_objects='cube_holes',
+    def __init__(self, task_type='reach', task_objects='cube_holes', num_subgoals=0,
                  reward_type='gt', vae_path=None, yolact_path=None, yolact_config=None, distance_type='euclidean',
                  logdir=currentdir, env=None):
         self.task_type = task_type
@@ -30,6 +32,7 @@ class TaskModule():
         self.distance_type = distance_type
         self.logdir = logdir
         self.task_objects_names = task_objects
+        self.num_subgoals = num_subgoals
         self.env = env
         self.image = None
         self.depth = None
@@ -38,8 +41,12 @@ class TaskModule():
         self.current_norm_distance = None
         self.stored_observation = []
         self.fig = None
-        self.threshold = 0.1 # distance threshold for successful task completion
+        self.threshold = 0.2  # distance threshold for successful task completion
         self.obsdim = (len(env.task_objects_names) + 1) * 3
+        self.angle = None
+        self.prev_angle = None
+        if self.task_type == '2stepreach':
+            self.obsdim = 6
         if self.reward_type == 'gt':
             src = 'ground_truth'
         elif self.reward_type == '3dvs':
@@ -62,12 +69,17 @@ class TaskModule():
         self.last_distance = None
         self.init_distance = None
         self.current_norm_distance = None
+        self.angle = None
         self.vision_module.mask = {}
         self.vision_module.centroid = {}
         self.vision_module.centroid_transformed = {}
         self.env.task_objects.append(self.env.robot)
         if self.reward_type == '2dvu':
             self.generate_new_goal(self.env.objects_area_boarders, self.env.active_cameras)
+        self.subgoals = [False]*self.num_subgoals #subgoal completed?
+        if self.task_type == '2stepreach':
+            self.obs_sub = [[0,2],[0,1]] #objects to have in observation for given subgoal
+            self.sub_idx = 0
 
     def render_images(self):
         render_info = self.env.render(mode="rgb_array", camera_id=self.env.active_cameras)
@@ -105,7 +117,11 @@ class TaskModule():
             obj_positions.append(list(self.env.robot.get_position()))
             self.visualize_2dvu(recons) if self.env.visualize == 1 else None
         else:
-            for env_object in self.env.task_objects:
+            if self.task_type == '2stepreach':
+                self.current_task_objects = [self.env.task_objects[x] for x in self.obs_sub[self.sub_idx]] #change objects in observation based on subgoal
+            else:
+                self.current_task_objects = self.env.task_objects #all objects in observation
+            for env_object in self.current_task_objects:
                 obj_positions.append(self.vision_module.get_obj_position(env_object,self.image,self.depth))
                 if self.reward_type == '6dvs' and self.task_type != 'reach' and env_object != self.env.task_objects[-1]:
                     obj_orientations.append(self.vision_module.get_obj_orientation(env_object,self.image))
@@ -159,6 +175,14 @@ class TaskModule():
                 return True
         return False
 
+    def check_angle_threshold(self):
+        self.angle = self.env.reward.get_angle()
+
+        if abs(self.angle) >= 18:
+            return True
+        else:
+            return False
+
     def check_distance_threshold(self, observation):
         """
         Check if the distance between relevant task objects is under threshold for successful task completion
@@ -172,6 +196,24 @@ class TaskModule():
         self.current_norm_distance = self.calc_distance(o1, o2)
         return self.current_norm_distance < self.threshold
 
+    def check_points_distance_threshold(self): 
+        if (self.task_type == 'pnp') and (self.env.robot_action != 'joints_gripper') and (len(self.env.robot.magnetized_objects) == 0):
+            o1 = self.current_task_objects[0]
+            o2 = self.current_task_objects[2]
+        else:
+            o1 = self.current_task_objects[0]
+            o2 = self.current_task_objects[1]
+        if o1 == self.env.robot:
+            closest_points = self.env.p.getClosestPoints(o1.get_uid, o2.get_uid(), self.threshold, o1.end_effector_index, -1)
+        elif o2 == self.env.robot:
+            closest_points = self.env.p.getClosestPoints(o2.get_uid(), o1.get_uid(), self.threshold, o2.end_effector_index, -1)
+        else:
+            closest_points = self.env.p.getClosestPoints(o1.get_uid(), o2.get_uid(), self.threshold, -1, -1)
+        if len(closest_points) > 0:
+            return closest_points
+        else:
+            return False
+
     def check_goal(self):
         """
         Check if goal of the task was completed successfully
@@ -179,13 +221,37 @@ class TaskModule():
         self.last_distance = self.current_norm_distance
         if self.init_distance is None:
             self.init_distance = self.current_norm_distance
-        if (self.task_type == 'reach' or self.task_type == 'push') and self.check_distance_threshold(self._observation): #threshold for successful push/throw/pick'n'place
+        contacts = self.check_points_distance_threshold()
+        
+        if self.task_type == 'pnp' and self.env.robot_action != 'joints_gripper' and contacts:
+            if len(self.env.robot.magnetized_objects) == 0:
+                self.env.episode_over = False
+                self.env.robot.magnetize_object(self.current_task_objects[0], contacts)
+            else:
+                self.env.episode_over = True
+                if self.env.episode_steps == 1:
+                    self.env.episode_info = "Task completed in initial configuration"
+                else:
+                    self.env.episode_info = "Task completed successfully"
+        elif (self.task_type == '2stepreach') and (False in self.subgoals) and contacts:
+                self.env.episode_info = "Subgoal {}/{} completed successfully".format(self.sub_idx+1, self.num_subgoals)
+                self.subgoals[self.sub_idx] = True #current subgoal done
+                self.env.episode_over = False #don't reset episode
+                self.env.robot.magnetize_object(self.env.task_objects[self.obs_sub[self.sub_idx][0]], contacts) #magnetize first object
+                self.sub_idx += 1 #continue with next subgoal
+                self.env.reward.reset() #reward reset
+
+        elif self.task_type == "switch":
+            if self.check_angle_threshold():
+                self.env.episode_over = True
+
+        elif contacts: #threshold for successful push/throw/pick'n'place
             self.env.episode_over = True
             if self.env.episode_steps == 1:
                 self.env.episode_info = "Task completed in initial configuration"
             else:
                 self.env.episode_info = "Task completed successfully"
-        elif self.check_time_exceeded() or (self.task_type == 'reach' and self.check_object_moved(self.env.task_objects[0])):
+        elif self.check_time_exceeded():
             self.env.episode_over = True
             self.env.episode_failed = True
         elif self.env.episode_steps == self.env.max_steps:

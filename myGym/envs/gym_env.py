@@ -1,7 +1,7 @@
 from myGym.envs import robot, env_object
 from myGym.envs import task as t
 from myGym.envs.base_env import CameraEnv
-from myGym.envs.rewards import DistanceReward, ComplexDistanceReward, SparseReward
+from myGym.envs.rewards import DistanceReward, ComplexDistanceReward, SparseReward, SwitchReward
 import pybullet
 import time
 import numpy as np
@@ -34,6 +34,7 @@ class GymEnv(CameraEnv):
         :param robot_action: (string) Mechanism of robot control (absolute, step, joints)
         :param robot_init_joint_poses: (list) Configuration in which robot will be initialized in the environment. Specified either in joint space as list of joint poses or in the end-effector space as [x,y,z] coordinates.
         :param task_type: (string) Type of learned task (reach, push, ...)
+        :param num_subgoals: (int) Number of subgoals in task
         :param task_objects: (list of strings) Objects that are relevant for performing the task
         :param reward_type: (string) Type of reward signal source (gt, 3dvs, 2dvu)
         :param reward: (string) Defines how to compute the reward
@@ -62,6 +63,7 @@ class GymEnv(CameraEnv):
                  robot_action="step",
                  robot_init_joint_poses=[],
                  task_type='reach',
+                 num_subgoals=0,
                  task_objects=["virtual_cube_holes"],
                  reward_type='gt',
                  reward = 'distance',
@@ -100,6 +102,7 @@ class GymEnv(CameraEnv):
         self.reward_type = reward_type
         self.distance_type = distance_type
         self.task = t.TaskModule(task_type=self.task_type,
+                                 num_subgoals=num_subgoals,
                                  task_objects=self.task_objects_names,
                                  reward_type=self.reward_type,
                                  vae_path=vae_path,
@@ -113,6 +116,9 @@ class GymEnv(CameraEnv):
             self.reward = ComplexDistanceReward(env=self, task=self.task)
         elif reward == 'sparse':
             self.reward = SparseReward(env=self, task=self.task)
+        elif reward == 'switch':
+            print("switch")
+            self.reward = SwitchReward(env=self, task=self.task)
         self.dataset = dataset
         self.obs_space = obs_space
         self.visualize = visualize
@@ -168,7 +174,7 @@ class GymEnv(CameraEnv):
                                             'boarders':[-0.5, 2.5, 0.8, 1.6, 0.1, 0.1]},
                                 'table':    {'urdf': 'table.urdf', 'texture': 'table.jpg', 
                                             'transform': {'position':[-0.0, -0.0, -1.05], 'orientation':[0.0, 0.0, 0*np.pi]},
-                                            'robot': {'position': [0.0, 0.0, 0.0], 'orientation': [0.0, 0.0, 0.5*np.pi]}, 
+                                            'robot': {'position': [0.0, 0.0, 0.0], 'orientation': [0.0, 0.0, 0.5*np.pi]},
                                             'camera': {'position': [[0.0, 2.4, 1.0], [-0.0, -1.5, 1.0], [1.8, 0.9, 1.0], [-1.8, 0.9, 1.0], [0.0, 0.9, 1.3],
                                                                     [0.0, 1.6, 0.8], [-0.0, -0.5, 0.8], [0.8, 0.9, 0.6], [-0.8, 0.9, 0.8], [0.0, 0.9, 1.]], 
                                                         'target': [[0.0, 2.1, 0.9], [-0.0, -0.8, 0.9], [1.4, 0.9, 0.88], [-1.4, 0.9, 0.88], [0.0, 0.898, 1.28],
@@ -261,13 +267,19 @@ class GymEnv(CameraEnv):
         Set action space dimensions and range
         """
         action_dim = self.robot.get_action_dimension()
-        if self.robot_action == "step":
+        if self.robot_action in ["step", "joints_step"]:
             self.action_low = np.array([-1] * action_dim)
             self.action_high = np.array([1] * action_dim)
         elif self.robot_action == "absolute":
-            self.action_low = np.array(self.objects_area_boarders[0:7:2])
-            self.action_high = np.array(self.objects_area_boarders[1:7:2])
-        else:
+            if any(isinstance(i, list) for i in self.objects_area_boarders):
+                boarders_max = np.max(self.objects_area_boarders,0)
+                boarders_min = np.min(self.objects_area_boarders,0)
+                self.action_low = np.array(boarders_min[0:7:2])
+                self.action_high = np.array(boarders_max[1:7:2])
+            else:
+                self.action_low = np.array(self.objects_area_boarders[0:7:2])
+                self.action_high = np.array(self.objects_area_boarders[1:7:2])
+        elif self.robot_action in ["joints", "joints_gripper"]:
             self.action_low = np.array(self.robot.joints_limits[0])
             self.action_high = np.array(self.robot.joints_limits[1])
         self.action_space = spaces.Box(np.array([-1]*action_dim), np.array([1]*action_dim))
@@ -381,6 +393,8 @@ class GymEnv(CameraEnv):
             info = {}
         else:
             reward = self.reward.compute(observation=self._observation)
+            if reward == None:
+                reward = 0
             self.episode_reward += reward
             self.task.check_goal()
             done = self.episode_over
@@ -440,15 +454,12 @@ class GymEnv(CameraEnv):
                     self.objects_area_boarders)
                 #orn = env_object.EnvObject.get_random_object_orientation()
                 orn = [0, 0, 0, 1]
-                fixed = False
-                for x in ["target", "crate", "bin", "box", "trash"]:
-                    if x in object_filename:
-                        fixed = True
-                        pos[2] = 0
-                object = env_object.EnvObject(object_filename, pos, orn, pybullet_client=self.p, fixed=fixed)
-            else:
-                object = env_object.EnvObject(
-                    object_filename, pos, orn, pybullet_client=self.p)
+            fixed = False
+            for x in ["target", "crate", "bin", "box", "trash", "switch"]:
+                if x in object_filename:
+                    fixed = True
+                    pos[2] = 0.05
+            object = env_object.EnvObject(object_filename, pos, orn, pybullet_client=self.p, fixed=fixed)
             if self.color_dict:
                 object.set_color(self.color_of_object(object))
             env_objects.append(object)

@@ -163,17 +163,23 @@ class SwitchReward(DistanceReward):
         w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, self.x_bot, self.y_bot, self.z_bot , self.x_bot_curr_pos,
                                       self.y_bot_curr_pos, self.z_bot_curr_pos)
         d = self.abs_diff()
+        a = self.calc_angle_reward(self.get_angle())
+
         k_w = 0.1
         k_d = 0.1
+        k_a = 0.1
+        # print(k_w * w, end=", ")
+        # print(k_d * d, end=", ")
+        # print(k_a * a)
 
-        reward = - k_w * w - k_d * d + self.calc_angle_reward(self.get_angle())
+        reward = - k_w * w - k_d * d + a * k_a
         self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], gripper_position,
                                     lineColorRGB=(0.31, 0.78, 0.47), lineWidth=3, lifeTime=0.02)
         self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [self.x_bot, self.y_bot, self.z_bot],
                                     lineColorRGB=(1, 0, 0), lineWidth=3, lifeTime=0.02)
         self.task.check_distance_threshold(observation=observation)
         self.rewards_history.append(reward)
-        # print(reward)
+        print(reward)
         return reward
 
     def reset(self):
@@ -264,12 +270,15 @@ class SwitchReward(DistanceReward):
         x = x1 - ((x1 - x2) * (
                     x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
                         z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
         y = y1 - ((y1 - y2) * (
                     x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
                         z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
         z = z1 - ((z1 - z2) * (
                     x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
                         z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
         d = sqrt((x - x3) ** 2 + (y - y3) ** 2 + (z - z3) ** 2)
 
         return d

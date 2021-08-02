@@ -160,26 +160,34 @@ class SwitchReward(DistanceReward):
         gripper_position = self.get_accurate_gripper_position(observation[3:6])
         self.set_variables(o1, gripper_position)
         self.set_offset(x=-0.1, z=0.25)
-        w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, self.x_bot, self.y_bot, self.z_bot , self.x_bot_curr_pos,
-                                      self.y_bot_curr_pos, self.z_bot_curr_pos)
+
+        if self.x_obj > 0:
+            self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [-0.7, self.y_obj, self.z_obj],
+                                        lineColorRGB=(1, 0, 0), lineWidth=3, lifeTime=1)
+            w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, -0.7, self.y_obj, self.z_obj, self.x_bot_curr_pos,
+                                       self.y_bot_curr_pos, self.z_bot_curr_pos)
+
+        else:
+            self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [0.7, self.y_obj, self.z_obj],
+                                        lineColorRGB=(0, 0.5, 1), lineWidth=3, lifeTime=1)
+
+            w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, -0.7, self.y_obj, self.z_obj, self.x_bot_curr_pos,
+                                          self.y_bot_curr_pos, self.z_bot_curr_pos)
+
         d = self.abs_diff()
         a = self.calc_angle_reward(self.get_angle())
 
-        k_w = 0.1
+        k_w = 0.4
         k_d = 0.1
         k_a = 0.1
-        # print(k_w * w, end=", ")
-        # print(k_d * d, end=", ")
-        # print(k_a * a)
 
         reward = - k_w * w - k_d * d + a * k_a
         self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], gripper_position,
-                                    lineColorRGB=(0.31, 0.78, 0.47), lineWidth=3, lifeTime=0.02)
-        self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [self.x_bot, self.y_bot, self.z_bot],
-                                    lineColorRGB=(1, 0, 0), lineWidth=3, lifeTime=0.02)
+                                    lineColorRGB=(0.31, 0.78, 0.47), lineWidth=3, lifeTime=0.03)
         self.task.check_distance_threshold(observation=observation)
         self.rewards_history.append(reward)
-        print(reward)
+        self.env.p.addUserDebugText(f"reward-{reward:.5f}, w-{w * k_w}, d-{d * k_d}, a-{a * k_a}",
+                                    [1, 1, 1], textSize=2.0, lifeTime=0.05, textColorRGB=[0.6, 0.0, 0.6])
         return reward
 
     def reset(self):

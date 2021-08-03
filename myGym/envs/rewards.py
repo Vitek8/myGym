@@ -320,7 +320,6 @@ class SwitchReward(DistanceReward):
         """
         This function calculates angle of switch
         """
-        print(self.task.task_type)
         if self.task.task_type == "switch":
             if len(self.task.current_task_objects) != 2:
                 raise "not expected number of objects"
@@ -344,6 +343,224 @@ class SwitchReward(DistanceReward):
 
     def calc_angle_reward(self, angle):
         if self.task.task_type == "switch":
+            if self.prev_angle is None:
+                self.prev_angle = angle
+
+            if angle < 0:
+                k = angle // 2
+
+            else:
+                k = angle // 2
+
+            reward = k * angle
+
+            if reward >= 162:
+                reward += 50
+            reward /= 100
+            if self.prev_angle == angle:
+                reward = 0
+
+            self.prev_angle = angle
+
+            return reward
+        else:
+            raise "not expected to use this function"
+
+
+class ButtonReward(DistanceReward):
+    """
+    Reward class for reward signal calculation based on distance differences between 2 objects,
+    angle of switch and difference between point and line (function used for that: calc_direction_3d()).
+    Parameters:
+        :param env: (object) Environment, where the training takes place
+        :param task: (object) Task that is being trained, instance of a class TaskModule
+    """
+    def __init__(self, env, task):
+        super(ButtonReward, self).__init__(env, task)
+        self.x_obj = None
+        self.y_obj = None
+        self.z_obj = None
+        self.x_bot = None
+        self.y_bot = None
+        self.z_bot = None
+
+        self.x_obj_curr_pos = None
+        self.y_obj_curr_pos = None
+        self.z_obj_curr_pos = None
+        self.x_bot_curr_pos = None
+        self.y_bot_curr_pos = None
+        self.z_bot_curr_pos = None
+
+        self.offset = None
+        self.prev_angle = None
+
+    def compute(self, observation):
+        """
+        Compute reward signal based on distance between 2 objects, angle of switch and difference between point and line
+         (function used for that: calc_direction_3d()).
+        The position of the objects must be present in observation.
+        Params:
+            :param observation: (list) Observation of the environment
+        Returns:
+            :return reward: (float) Reward signal for the environment
+        """
+        observation = observation["observation"] if isinstance(observation, dict) else observation
+        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
+        gripper_position = self.get_accurate_gripper_position(observation[3:6])
+
+        reward = 0
+        self.task.check_distance_threshold(observation=observation)
+        self.rewards_history.append(reward)
+        return reward
+
+    def reset(self):
+        """
+        Reset current positions of switch and robot, initial position of switch and robot and previous angle of switch.
+        Call this after the end of an episode.
+        """
+        self.x_obj = None
+        self.y_obj = None
+        self.z_obj = None
+        self.x_bot = None
+        self.y_bot = None
+        self.z_bot = None
+
+        self.x_obj_curr_pos = None
+        self.y_obj_curr_pos = None
+        self.z_obj_curr_pos = None
+        self.x_bot_curr_pos = None
+        self.y_bot_curr_pos = None
+        self.z_bot_curr_pos = None
+
+        self.offset = None
+        self.prev_angle = None
+
+    def get_accurate_gripper_position(self, gripper_position):
+        """
+        Calculate more accurate position of gripper
+        """
+        gripper_orientation = self.env.p.getLinkState(self.env.robot.robot_uid, self.env.robot.end_effector_index)[1]
+        gripper_matrix = self.env.p.getMatrixFromQuaternion(gripper_orientation)
+        direction = [0, 0, 0.1]  # length is 0.1
+        m = np.array([[gripper_matrix[0], gripper_matrix[1], gripper_matrix[2]],
+                      [gripper_matrix[3], gripper_matrix[4], gripper_matrix[5]],
+                      [gripper_matrix[6], gripper_matrix[7], gripper_matrix[8]]])
+        orientation_vector = m.dot(direction)  # length is 0.1
+        gripper_position = np.add(gripper_position, orientation_vector)
+        return gripper_position
+
+    def set_variables(self, o1, o2):
+        if self.x_obj is None:
+            self.x_obj = o1[0]
+
+        if self.y_obj is None:
+            self.y_obj = o1[1]
+
+        if self.z_obj is None:
+            self.z_obj = o1[2]
+
+        if self.x_bot is None:
+            self.x_bot = o2[0]
+
+        if self.y_bot is None:
+            self.y_bot = o2[1]
+
+        if self.z_bot is None:
+            self.z_bot = o2[2]
+
+        self.x_obj_curr_pos = o1[0]
+        self.y_obj_curr_pos = o1[1]
+        self.z_obj_curr_pos = o1[2]
+        self.x_bot_curr_pos = o2[0]
+        self.y_bot_curr_pos = o2[1]
+        self.z_bot_curr_pos = o2[2]
+
+    def set_offset(self, x=0.0, y=0.0, z=0.0):
+        if self.offset is None:
+            self.offset = True
+            if self.x_obj > 0:
+                self.x_obj -= x
+                self.y_obj += y
+                self.z_obj += z
+            else:
+                self.x_obj += x
+                self.y_obj += y
+                self.z_obj += z
+
+    @staticmethod
+    def calc_direction_2d(x1, y1, x2, y2, x3, y3):
+        """
+        This function calculates difference between point - (actual position of robot's gripper [x3, y3])
+        and line - (initial position of robot: [x1, y1], final position of robot: [x2, y2]) in 2D
+        """
+        x = x1 + ((x1 - x2) * (x1 * x2 + x1 * x3 - x2 * x3 + y1 * y2 + y1 * y3 - y2 * y3 - x1 ** 2 - y1 ** 2)) / (
+                x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2)
+        y = y1 + ((y1 - y2) * (x1 * x2 + x1 * x3 - x2 * x3 + y1 * y2 + y1 * y3 - y2 * y3 - x1 ** 2 - y1 ** 2)) / (
+                x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2)
+        d = sqrt((x1 * y2 - x2 * y1 - x1 * y3 + x3 * y1 + x2 * y3 - x3 * y2) ** 2 / (
+                x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2))
+        return [x, y, d]
+
+    @staticmethod
+    def calc_direction_3d(x1, y1, z1, x2, y2, z2, x3, y3, z3):
+        """
+        This function calculates difference between point - (actual position of robot's gripper [x3, y3, z3])
+        and line - (initial position of robot: [x1, y1, z1], final position of robot: [x2, y2, z2]) in 3D
+        """
+        x = x1 - ((x1 - x2) * (
+                x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
+                z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
+        y = y1 - ((y1 - y2) * (
+                x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
+                z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
+        z = z1 - ((z1 - z2) * (
+                x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
+                z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
+        d = sqrt((x - x3) ** 2 + (y - y3) ** 2 + (z - z3) ** 2)
+
+        return d
+
+    def abs_diff(self):
+        """
+        This function calculates absolute differance between task_object and gripper
+        """
+        x_diff = self.x_obj_curr_pos - self.x_bot_curr_pos
+        y_diff = self.y_obj_curr_pos - self.y_bot_curr_pos
+        z_diff = self.z_obj_curr_pos - self.z_bot_curr_pos
+
+        abs_diff = sqrt(x_diff ** 2 + y_diff ** 2 + z_diff ** 2)
+        return abs_diff
+
+    def is_switched(self):
+        """
+        This function calculates angle of switch
+        """
+        if self.task.task_type == "press":
+            if len(self.task.current_task_objects) != 2:
+                raise "not expected number of objects"
+
+            o1 = self.task.current_task_objects[0]
+            o2 = self.task.current_task_objects[1]
+
+            if o1 == self.env.robot:
+                # robot = o1
+                switch = o2
+            else:
+                # robot = o2
+                switch = o1
+
+            p = self.env.p
+            pos = p.getJointState(switch.get_uid(), 0)
+            angle = pos[0] * 180 / math.pi  # in degrees
+            return abs(angle)
+        else:
+            raise "expected task_type - press"
+
+    def calc_angle_reward(self, angle):
+        if self.task.task_type == "press":
             if self.prev_angle is None:
                 self.prev_angle = angle
 

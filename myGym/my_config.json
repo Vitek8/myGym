@@ -37,6 +37,6 @@
 "eval_freq":100,
 "eval_episodes":10,
 #Saving and logging
-"logdir":"trained_models/switch_kw_01_kd_01_ka_01_3d",
+"logdir":"trained_models/test/test",
 "record":0
 }

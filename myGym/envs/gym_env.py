@@ -455,7 +455,7 @@ class GymEnv(CameraEnv):
                 #orn = env_object.EnvObject.get_random_object_orientation()
                 orn = [0, 0, 0, 1]
             fixed = False
-            for x in ["target", "crate", "bin", "box", "trash", "switch"]:
+            for x in ["target", "crate", "bin", "box", "trash", "switch", "btn"]:
                 if x in object_filename:
                     fixed = True
                     pos[2] = 0.05

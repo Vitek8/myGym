@@ -12,3 +12,4 @@ build/
 /vae_datasets/
 my_config.json
 config_test.json
+.idea/workspace.xml

@@ -118,7 +118,8 @@ class DistanceReward(Reward):
 
 class SwitchReward(DistanceReward):
     """
-    Reward class for reward signal calculation based on distance differences between 2 objects
+    Reward class for reward signal calculation based on distance differences between 2 objects,
+    angle of switch and difference between point and line (function used for that: calc_direction_3d()).
     Parameters:
         :param env: (object) Environment, where the training takes place
         :param task: (object) Task that is being trained, instance of a class TaskModule
@@ -150,7 +151,8 @@ class SwitchReward(DistanceReward):
 
     def compute(self, observation):
         """
-        Compute reward signal based on distance between 2 objects, angle of switch and difference between point and line.
+        Compute reward signal based on distance between 2 objects, angle of switch and difference between point and line
+         (function used for that: calc_direction_3d()).
         The position of the objects must be present in observation.
         Params:
             :param observation: (list) Observation of the environment
@@ -159,7 +161,7 @@ class SwitchReward(DistanceReward):
         """
         observation = observation["observation"] if isinstance(observation, dict) else observation
         o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
-        gripper_position = self.get_accurate_gripper_position(observation[3:6])    #accurate position of gripper
+        gripper_position = self.get_accurate_gripper_position(observation[3:6])
         self.set_variables(o1, gripper_position)    # save local positions of task_object and gripper to global positions
         self.set_offset(x=-0.1, z=0.25)
 
@@ -195,11 +197,9 @@ class SwitchReward(DistanceReward):
 
     def reset(self):
         """
-        Reset stored value of distance be
+        Reset current positions of switch and robot, initial position of switch and robot and previous angle of switch.
+        Call this after the end of an episode.
         """
-        self.prev_obj1_position = None
-        self.prev_obj2_position = None
-
         self.x_obj = None
         self.y_obj = None
         self.z_obj = None
@@ -218,6 +218,9 @@ class SwitchReward(DistanceReward):
         self.prev_angle = None
 
     def get_accurate_gripper_position(self, gripper_position):
+        """
+        Calculate more accurate position of gripper
+        """
         gripper_orientation = self.env.p.getLinkState(self.env.robot.robot_uid, self.env.robot.end_effector_index)[1]
         gripper_matrix = self.env.p.getMatrixFromQuaternion(gripper_orientation)
         direction = [0, 0, 0.1]  # length is 0.1

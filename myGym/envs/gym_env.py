@@ -1,7 +1,7 @@
 from myGym.envs import robot, env_object
 from myGym.envs import task as t
 from myGym.envs.base_env import CameraEnv
-from myGym.envs.rewards import DistanceReward, ComplexDistanceReward, SparseReward, SwitchReward
+from myGym.envs.rewards import DistanceReward, ComplexDistanceReward, SparseReward, SwitchReward, ButtonReward
 import pybullet
 import time
 import numpy as np
@@ -119,6 +119,9 @@ class GymEnv(CameraEnv):
         elif reward == 'switch':
             print("switch")
             self.reward = SwitchReward(env=self, task=self.task)
+        elif reward == 'btn':
+            print("btn")
+            self.reward = ButtonReward(env=self, task=self.task)
         self.dataset = dataset
         self.obs_space = obs_space
         self.visualize = visualize

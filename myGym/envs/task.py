@@ -45,6 +45,7 @@ class TaskModule():
         self.obsdim = (len(env.task_objects_names) + 1) * 3
         self.angle = None
         self.prev_angle = None
+        self.switched = None
         if self.task_type == '2stepreach':
             self.obsdim = 6
         if self.reward_type == 'gt':
@@ -70,6 +71,7 @@ class TaskModule():
         self.init_distance = None
         self.current_norm_distance = None
         self.angle = None
+        self.switched = None
         self.vision_module.mask = {}
         self.vision_module.centroid = {}
         self.vision_module.centroid_transformed = {}
@@ -175,10 +177,18 @@ class TaskModule():
                 return True
         return False
 
-    def check_angle_threshold(self):
+    def check_switch_threshold(self):
         self.angle = self.env.reward.get_angle()
 
         if abs(self.angle) >= 18:
+            return True
+        else:
+            return False
+
+    def check_press_threshold(self):
+        self.switched = self.env.reward.is_switched()
+
+        if self.switched >= 1.7188734439415954:
             return True
         else:
             return False
@@ -240,11 +250,15 @@ class TaskModule():
                 self.env.robot.magnetize_object(self.env.task_objects[self.obs_sub[self.sub_idx][0]], contacts) #magnetize first object
                 self.sub_idx += 1 #continue with next subgoal
                 self.env.reward.reset() #reward reset
-
         elif self.task_type == "switch":
-            if self.check_angle_threshold():
+            if self.check_switch_threshold():
                 self.env.episode_over = True
-
+        elif self.task_type == "press":
+            if self.check_press_threshold():
+                self.env.episode_over = True
+            elif self.check_time_exceeded():
+                self.env.episode_over = True
+                self.env.episode_failed = True
         elif contacts: #threshold for successful push/throw/pick'n'place
             self.env.episode_over = True
             if self.env.episode_steps == 1:

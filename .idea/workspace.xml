@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="adding angle coefficient and angle rewarding">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="gitignore update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myGym/envs/objects/assembly/urdf/btn.urdf" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/envs/objects/assembly/urdf/btn.urdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myGym/my_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/myGym/my_config.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Test_avoid-distractor" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,7 +53,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../myGym_fork" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../R2D2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
@@ -91,7 +91,9 @@
       <workItem from="1627662016454" duration="3130000" />
       <workItem from="1627715977288" duration="11269000" />
       <workItem from="1627892306222" duration="140000" />
-      <workItem from="1627893476928" duration="8398000" />
+      <workItem from="1627893476928" duration="20915000" />
+      <workItem from="1627980000614" duration="84000" />
+      <workItem from="1627980130295" duration="12604000" />
     </task>
     <task id="LOCAL-00001" summary="reward update">
       <created>1627894519713</created>
@@ -128,7 +130,63 @@
       <option name="project" value="LOCAL" />
       <updated>1627903436562</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="adding additions">
+      <created>1627903488762</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1627903488762</updated>
+    </task>
+    <task id="LOCAL-00007" summary="adding additions">
+      <created>1627903667223</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1627903667223</updated>
+    </task>
+    <task id="LOCAL-00008" summary="adding additions">
+      <created>1627903697576</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1627903697576</updated>
+    </task>
+    <task id="LOCAL-00009" summary="adding angle coefficient to the reward">
+      <created>1627919467133</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1627919467133</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fully function task-switch">
+      <created>1627990589813</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1627990589813</updated>
+    </task>
+    <task id="LOCAL-00011" summary="final editing of comments">
+      <created>1627991886568</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1627991886568</updated>
+    </task>
+    <task id="LOCAL-00012" summary="gitignore update">
+      <created>1627993628364</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1627993628364</updated>
+    </task>
+    <task id="LOCAL-00013" summary="gitignore update">
+      <created>1627993733644</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1627993733644</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,6 +212,11 @@
     <MESSAGE value="test" />
     <MESSAGE value="initial commit" />
     <MESSAGE value="adding angle coefficient and angle rewarding" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding angle coefficient and angle rewarding" />
+    <MESSAGE value="adding additions" />
+    <MESSAGE value="adding angle coefficient to the reward" />
+    <MESSAGE value="fully function task-switch" />
+    <MESSAGE value="final editing of comments" />
+    <MESSAGE value="gitignore update" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore update" />
   </component>
 </project>

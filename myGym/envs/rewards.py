@@ -58,6 +58,7 @@ class Reward:
             plt.savefig(save_dir + "/reward_over_episodes_episode{}.png".format(self.env.episode_number))
             plt.close()
 
+
 class DistanceReward(Reward):
     """
     Reward class for reward signal calculation based on distance differences between 2 objects
@@ -122,12 +123,8 @@ class SwitchReward(DistanceReward):
         :param env: (object) Environment, where the training takes place
         :param task: (object) Task that is being trained, instance of a class TaskModule
     """
-
     def __init__(self, env, task):
         super(SwitchReward, self).__init__(env, task)
-        self.prev_obj1_position = None
-        self.prev_obj2_position = None
-
         self.x_obj = None
         self.y_obj = None
         self.z_obj = None
@@ -142,52 +139,58 @@ class SwitchReward(DistanceReward):
         self.y_bot_curr_pos = None
         self.z_bot_curr_pos = None
 
-        self.height = None
         self.offset = None
         self.prev_angle = None
+        self.debug = True
+
+        # coefficients used to calculate reward
+        self.k_w = 0.1
+        self.k_d = 0.1
+        self.k_a = 1
 
     def compute(self, observation):
         """
-        Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
+        Compute reward signal based on distance between 2 objects, angle of switch and difference between point and line.
+        The position of the objects must be present in observation.
         Params:
             :param observation: (list) Observation of the environment
         Returns:
             :return reward: (float) Reward signal for the environment
         """
         observation = observation["observation"] if isinstance(observation, dict) else observation
-        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3]) / 2)]
-        o2 = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3]) / 2):-3]
-        gripper_position = self.get_accurate_gripper_position(observation[3:6])
-        self.set_variables(o1, gripper_position)
+        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
+        gripper_position = self.get_accurate_gripper_position(observation[3:6])    #accurate position of gripper
+        self.set_variables(o1, gripper_position)    # save local positions of task_object and gripper to global positions
         self.set_offset(x=-0.1, z=0.25)
 
         if self.x_obj > 0:
-            self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [-0.7, self.y_obj, self.z_obj],
-                                        lineColorRGB=(1, 0, 0), lineWidth=3, lifeTime=1)
-            w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, -0.7, self.y_obj, self.z_obj, self.x_bot_curr_pos,
+            if self.debug:
+                self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [-0.7, self.y_obj, self.z_obj],
+                                            lineColorRGB=(0, 0.5, 1), lineWidth=3, lifeTime=1)
+            w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, 0.7, self.y_obj, self.z_obj,
+                                       self.x_bot_curr_pos,
                                        self.y_bot_curr_pos, self.z_bot_curr_pos)
 
         else:
-            self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [0.7, self.y_obj, self.z_obj],
-                                        lineColorRGB=(0, 0.5, 1), lineWidth=3, lifeTime=1)
-
-            w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, -0.7, self.y_obj, self.z_obj, self.x_bot_curr_pos,
-                                          self.y_bot_curr_pos, self.z_bot_curr_pos)
+            if self.debug:
+                self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [0.7, self.y_obj, self.z_obj],
+                                            lineColorRGB=(0, 0.5, 1), lineWidth=3, lifeTime=1)
+            w = self.calc_direction_3d(self.x_obj, self.y_obj, self.z_obj, -0.7, self.y_obj, self.z_obj,
+                                       self.x_bot_curr_pos,
+                                       self.y_bot_curr_pos, self.z_bot_curr_pos)
 
         d = self.abs_diff()
         a = self.calc_angle_reward(self.get_angle())
 
-        k_w = 0.4
-        k_d = 0.1
-        k_a = 0.1
-
-        reward = - k_w * w - k_d * d + a * k_a
-        self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], gripper_position,
-                                    lineColorRGB=(0.31, 0.78, 0.47), lineWidth=3, lifeTime=0.03)
+        reward = - self.k_w * w - self.k_d * d + self.k_a * a
         self.task.check_distance_threshold(observation=observation)
         self.rewards_history.append(reward)
-        self.env.p.addUserDebugText(f"reward-{reward:.5f}, w-{w * k_w}, d-{d * k_d}, a-{a * k_a}",
-                                    [1, 1, 1], textSize=2.0, lifeTime=0.05, textColorRGB=[0.6, 0.0, 0.6])
+        if self.debug:
+            self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], gripper_position,
+                                        lineColorRGB=(1, 0, 0), lineWidth=3, lifeTime=0.03)
+            self.env.p.addUserDebugText(f"reward:{reward:.3f}, w:{w * self.k_w:.3f}, d:{d * self.k_d:.3f},"
+                                        f" a:{a * self.k_a:.3f}",
+                                        [1, 1, 1], textSize=2.0, lifeTime=0.05, textColorRGB=[0.6, 0.0, 0.6])
         return reward
 
     def reset(self):
@@ -211,7 +214,6 @@ class SwitchReward(DistanceReward):
         self.y_bot_curr_pos = None
         self.z_bot_curr_pos = None
 
-        self.height = None
         self.offset = None
         self.prev_angle = None
 
@@ -251,7 +253,6 @@ class SwitchReward(DistanceReward):
         self.x_bot_curr_pos = o2[0]
         self.y_bot_curr_pos = o2[1]
         self.z_bot_curr_pos = o2[2]
-        self.height = sqrt(o1[2] ** 2 + o2[2] ** 2)
 
     def set_offset(self, x=0.0, y=0.0, z=0.0):
         if self.offset is None:
@@ -265,33 +266,46 @@ class SwitchReward(DistanceReward):
                 self.y_obj += y
                 self.z_obj += z
 
-    def calc_direction_2d(self, x1, y1, x2, y2, x3, y3):
+    @staticmethod
+    def calc_direction_2d(x1, y1, x2, y2, x3, y3):
+        """
+        This function calculates difference between point - (actual position of robot's gripper [x3, y3])
+        and line - (initial position of robot: [x1, y1], final position of robot: [x2, y2]) in 2D
+        """
         x = x1 + ((x1 - x2) * (x1 * x2 + x1 * x3 - x2 * x3 + y1 * y2 + y1 * y3 - y2 * y3 - x1 ** 2 - y1 ** 2)) / (
-                    x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2)
+                x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2)
         y = y1 + ((y1 - y2) * (x1 * x2 + x1 * x3 - x2 * x3 + y1 * y2 + y1 * y3 - y2 * y3 - x1 ** 2 - y1 ** 2)) / (
-                    x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2)
+                x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2)
         d = sqrt((x1 * y2 - x2 * y1 - x1 * y3 + x3 * y1 + x2 * y3 - x3 * y2) ** 2 / (
-                    x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2))
-        return d
+                x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2))
+        return [x, y, d]
 
-    def calc_direction_3d(self, x1, y1, z1, x2, y2, z2, x3, y3, z3):
+    @staticmethod
+    def calc_direction_3d(x1, y1, z1, x2, y2, z2, x3, y3, z3):
+        """
+        This function calculates difference between point - (actual position of robot's gripper [x3, y3, z3])
+        and line - (initial position of robot: [x1, y1, z1], final position of robot: [x2, y2, z2]) in 3D
+        """
         x = x1 - ((x1 - x2) * (
-                    x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
-                        z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+                x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
+                z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
 
         y = y1 - ((y1 - y2) * (
-                    x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
-                        z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+                x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
+                z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
 
         z = z1 - ((z1 - z2) * (
-                    x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
-                        z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+                x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
+                z1 - z2))) / ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
 
         d = sqrt((x - x3) ** 2 + (y - y3) ** 2 + (z - z3) ** 2)
 
         return d
 
     def abs_diff(self):
+        """
+        This function calculates absolute differance between task_object and gripper
+        """
         x_diff = self.x_obj_curr_pos - self.x_bot_curr_pos
         y_diff = self.y_obj_curr_pos - self.y_bot_curr_pos
         z_diff = self.z_obj_curr_pos - self.z_bot_curr_pos
@@ -299,45 +313,31 @@ class SwitchReward(DistanceReward):
         abs_diff = sqrt(x_diff ** 2 + y_diff ** 2 + z_diff ** 2)
         return abs_diff
 
-    def is_touched(self, contact_points):
-        ret = None
-        for val in contact_points:
-
-            if val != ():
-                ret = True
-
-        return ret
-
-    def calc_dist(self, o1, o2, threshold):
-        x = o1[0] - o2[0]
-        y = o1[1] - o2[1]
-        z = o1[2] - o2[2]
-
-        print(x, y)
-        if abs(x) < threshold and abs(y) < threshold:
-            return 1 / math.sqrt(x ** 2 + y ** 2) * 10
-        else:
-            return 1 / math.sqrt(x ** 2 + y ** 2) - 1
-
     def get_angle(self):
+        """
+        This function calculates angle of switch
+        """
+        print(self.task.task_type)
         if self.task.task_type == "switch":
             if len(self.task.current_task_objects) != 2:
-                raise ("not expected number of objects")
+                raise "not expected number of objects"
 
             o1 = self.task.current_task_objects[0]
             o2 = self.task.current_task_objects[1]
 
             if o1 == self.env.robot:
-                robot = o1
+                # robot = o1
                 switch = o2
             else:
-                robot = o2
+                # robot = o2
                 switch = o1
 
             p = self.env.p
             pos = p.getJointState(switch.get_uid(), 0)
             angle = int(pos[0] * 180 / math.pi)  # in degrees
             return abs(angle)
+        else:
+            raise "expected task_type - switch"
 
     def calc_angle_reward(self, angle):
         if self.task.task_type == "switch":
@@ -358,348 +358,11 @@ class SwitchReward(DistanceReward):
             if self.prev_angle == angle:
                 reward = 0
 
-            # if angle != 0 and angle != 1:
-            #     if angle > self.prev_angle:
-            #         pass
-            #         # print("úhel se zvětšuje")
-            #
-            #     if angle < self.prev_angle:
-            #         reward = -reward
-            #         # print("úhel se zmenšuje")
-
             self.prev_angle = angle
 
             return reward
         else:
-            raise ("not expected to use this function")
-
-
-class SwitchReward_old(DistanceReward):
-    """
-    Reward class for reward signal calculation based on distance differences between 2 objects
-    Parameters:
-        :param env: (object) Environment, where the training takes place
-        :param task: (object) Task that is being trained, instance of a class TaskModule
-    """
-
-    def __init__(self, env, task):
-        super(SwitchReward_old, self).__init__(env, task)
-        self.prev_obj1_position = None
-        self.prev_obj2_position = None
-        self.prev_angle = None
-
-    def compute(self, observation):
-        """
-        Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
-        Params:
-            :param observation: (list) Observation of the environment
-        Returns:
-            :return reward: (float) Reward signal for the environment
-        """
-        observation = observation["observation"] if isinstance(observation, dict) else observation
-        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3]) / 2)]
-        o2 = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3]) / 2):-3]
-        height = math.sqrt(o1[2] ** 2 + o2[2] ** 2)
-        angle = self.get_angle()
-        self.task.check_distance_threshold(observation=observation)
-        if height >= 0.3 and height <= 0.5:
-            reward = self.calc_dist(o1, o2, 0.2) + self.calc_angle_reward(angle)
-        else:
-            reward = self.calc_dist(o1, o2, 0.2) - 1
-
-        self.rewards_history.append(reward)
-        return reward
-
-    def calc_dist(self, o1, o2, threshold):
-        x = o1[0] - o2[0]
-        y = o1[1] - o2[1]
-        # print(x, y)
-        if abs(x) < threshold and abs(y) <= threshold:
-            return 1 / math.sqrt(x ** 2 + y ** 2) * 10
-        else:
-            return 1 / math.sqrt(x ** 2 + y ** 2)
-
-    def get_angle(self):
-        if self.task.task_type == "switch":
-            if len(self.task.current_task_objects) != 2:
-                raise ("not expected number of objects")
-
-            o1 = self.task.current_task_objects[0]
-            o2 = self.task.current_task_objects[1]
-            if o1 == self.env.robot:
-                robot = o1
-                switch = o2
-            else:
-                robot = o2
-                switch = o1
-            p = self.env.p
-            pos = p.getJointState(switch.get_uid(), 0)
-            angle = int(pos[0] * 180 / math.pi)  # in degrees
-            return abs(angle)
-
-    def calc_angle_reward(self, angle):
-        if self.task.task_type == "switch":
-            if self.prev_angle is None:
-                self.prev_angle = angle
-
-            if angle < 0:
-                k = angle // 2
-
-            else:
-                k = angle // 2
-
-            reward = k * angle
-
-            if reward >= 162:
-                reward += 50
-
-            if self.prev_angle == angle:
-                reward = 0
-
-            self.prev_angle = angle
-            return reward
-        else:
-            raise ("not expected to use this function")
-
-
-class SwitchReward_not_working(DistanceReward):
-    """
-    Reward class for reward signal calculation based on distance differences between 2 objects
-
-    Parameters:
-        :param env: (object) Environment, where the training takes place
-        :param task: (object) Task that is being trained, instance of a class TaskModule
-    """
-
-    def __init__(self, env, task):
-        super(SwitchReward_not_working, self).__init__(env, task)
-        self.prev_obj1_position = None
-        self.prev_obj2_position = None
-        self.prev_reward = None
-        self.reward = None
-        self.angle = None
-        self.prev_angle = None
-
-    def compute(self, observation):
-        """
-        Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
-
-        Params:
-            :param observation: (list) Observation of the environment
-        Returns:
-            :return reward: (float) Reward signal for the environment
-        """
-        observation = observation["observation"] if isinstance(observation, dict) else observation
-        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3]) / 2)]
-        o2 = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3]) / 2):-3]
-        diff_height = math.sqrt(o1[2] ** 2 + o2[2] ** 2)
-        reward = 0
-        # print(f"height = {diff_height:.5f}, distance = {diff_distance:.5f}, threshold = {self.calc_dist_diff(o1, o2):.5f}")
-
-        if self.task.check_distance_threshold(observation):
-            reward += 100
-        else:
-            reward -= 100
-
-        if diff_height >= 0.2 and diff_height <= 0.4:
-            reward = 1 / self.calc_dist_diff(o1, o2)
-        else:
-            reward -= 100
-
-        self.task.check_angle_threshold()
-        # if not (self.check_reward_change()):
-        #     self.task.check_angle_threshold()
-        #     reward += self.reward
-
-        # else:
-        #     reward -= 100
-
-        self.rewards_history.append(reward)
-        print(f"reward: {reward},"
-              f"height: {diff_height:.5f},"
-              # f"check_angle: {self.check_reward_change()},"
-              f"angle: {self.calc_angle_reward()}")
-        return reward
-
-    # def check_reward_change(self):
-    #     val = False
-    #     if self.reward is None and self.prev_reward is None:
-    #         self.reward = self.calc_angle_reward()
-    #         self.prev_reward = self.reward
-    #     else:
-    #         self.reward = self.calc_angle_reward()
-    #
-    #     if self.reward == self.prev_reward:
-    #         val = True
-    #
-    #     self.prev_reward = self.reward
-    #     return val
-
-    def calc_angle_reward(self):
-        if self.task.task_type == "switch":
-            if len(self.task.current_task_objects) != 2:
-                print("not expected number of objects")
-            o1 = self.task.current_task_objects[0]
-            o2 = self.task.current_task_objects[1]
-            if o1 == self.env.robot:
-                robot = o1
-                switch = o2
-            else:
-                robot = o2
-                switch = o1
-            p = self.env.p
-            pos = p.getJointState(switch.get_uid(), 0)
-            print(pos)
-            angle = int(pos[0] * 180 / math.pi)  # in degrees
-            if self.prev_angle is None:
-                self.prev_angle = angle
-
-            if self.angle < 0:
-                k = angle // 2
-
-            else:
-                k = angle // 2
-
-            reward = k * angle
-
-            if reward >= 162:
-                reward += 50
-
-            if self.prev_angle == angle:
-                reward = 0
-
-            self.prev_angle = angle
-            return reward
-        else:
-            print("not expected to use this function")
-
-
-class SwitchReward_2(DistanceReward):
-    """
-    Reward class for reward signal calculation based on distance differences between 2 objects
-
-    Parameters:
-        :param env: (object) Environment, where the training takes place
-        :param task: (object) Task that is being trained, instance of a class TaskModule
-    """
-
-    def __init__(self, env, task):
-        super(SwitchReward, self).__init__(env, task)
-        self.prev_obj1_position = None
-        self.prev_obj2_position = None
-        self.prev_reward = None
-        self.reward = None
-
-    def compute(self, observation):
-        """
-        Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
-
-        Params:
-            :param observation: (list) Observation of the environment
-        Returns:
-            :return reward: (float) Reward signal for the environment
-        """
-        observation = observation["observation"] if isinstance(observation, dict) else observation
-        # print(observation)
-        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3]) / 2)]
-        o2 = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3]) / 2):-3]
-        diff_height = math.sqrt(o1[2] ** 2 + o2[2] ** 2)
-        diff_y = math.sqrt(o1[1] ** 2 + o2[1] ** 2)
-        diff_x = math.sqrt(o1[0] ** 2 + o2[0] ** 2)
-
-        reward = 0
-        threshold = self.task.check_distance_threshold(observation)
-        angle_reward = self.task.calc_angle_reward()
-
-        if threshold:
-            reward += 100
-        else:
-            reward -= 10
-
-        if diff_height >= 0.2 and diff_height <= 0.4:
-            reward += self.task.calc_distance(o1, o2)
-        else:
-            reward -= 10
-
-        if angle_reward > 0:
-            reward += angle_reward
-        else:
-            reward -= 10
-        # print(f"threshold: {threshold},"
-        #       f"height: {diff_height:.5f},"
-        #       f"angle: {angle_reward}",
-        #       f"reward: {reward}")
-        print(f"[{diff_x:.3f},{diff_y:.3f},{diff_height:.3f}]")
-        self.rewards_history.append(reward)
-        return reward
-
-
-class SwitchReward_fce(DistanceReward):
-    """
-    Reward class for reward signal calculation based on distance differences between 2 objects
-
-    Parameters:
-        :param env: (object) Environment, where the training takes place
-        :param task: (object) Task that is being trained, instance of a class TaskModule
-    """
-
-    def __init__(self, env, task):
-        super(SwitchReward, self).__init__(env, task)
-        self.prev_obj1_position = None
-        self.prev_obj2_position = None
-        self.prev_reward = None
-        self.reward = None
-
-    def compute(self, observation):
-        """
-        Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
-
-        Params:
-            :param observation: (list) Observation of the environment
-        Returns:
-            :return reward: (float) Reward signal for the environment
-        """
-        observation = observation["observation"] if isinstance(observation, dict) else observation
-        o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3]) / 2)]
-        o2 = observation[3:6] if self.env.reward_type != "2dvu" else observation[int(len(observation[:-3]) / 2):-3]
-        diff_height = math.sqrt(o1[2] ** 2 + o2[2] ** 2)
-        diff_distance = math.sqrt(o1[0] ** 2 + o2[0] ** 2)
-        # print(f"height = {diff_height:.5f}, distance = {diff_distance:.5f}, threshold = {self.calc_dist_diff(o1, o2):.5f}")
-
-        if (self.task.check_distance_threshold(observation)):
-            print("threshold reached")
-            if diff_height >= 0.2 and diff_height <= 0.37:
-                # print("height reached", diff_height)
-                self.task.check_distance_threshold(observation)
-                reward = 1 / self.task.calc_distance(o1, o2)
-
-                if self.check_reward_change(self.reward, self.prev_reward):
-                    reward += self.task.calc_angle_reward()
-
-            else:
-                # print("not reached", diff_height)
-                self.task.check_distance_threshold(observation)
-                reward = 0
-        else:
-            # print("not reached")
-            reward = self.task.calc_angle_reward()
-        # print("reward: ", reward)
-        self.rewards_history.append(reward)
-        print(reward)
-        return reward
-
-    def check_reward_change(self, reward, prev_reward):
-        val = None
-        self.reward = reward
-        self.prev_reward = prev_reward
-        if reward is None and prev_reward is None:
-            self.reward = self.task.calc_angle_reward()
-            self.prev_reward = self.task.calc_angle_reward()
-        if self.reward == self.prev_reward:
-            val = True
-
-        self.prev_reward = self.reward
-        return False if val is None else True
+            raise "not expected to use this function"
 
 
 class ComplexDistanceReward(DistanceReward):
@@ -710,7 +373,6 @@ class ComplexDistanceReward(DistanceReward):
         :param env: (object) Environment, where the training takes place
         :param task: (object) Task that is being trained, instance of a class TaskModule
     """
-
     def __init__(self, env, task):
         super(ComplexDistanceReward, self).__init__(env, task)
         self.prev_obj3_position = None
@@ -780,7 +442,6 @@ class SparseReward(Reward):
         :param env: (object) Environment, where the training takes place
         :param task: (object) Task that is being trained, instance of a class TaskModule
     """
-
     def __init__(self, env, task):
         super(SparseReward, self).__init__(env, task)
 

@@ -10,4 +10,5 @@ build/
 **/dtdseamless/
 **/.directory
 /vae_datasets/
-**/my_config.json
+my_config.json
+config_test.json

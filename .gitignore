@@ -1,3 +1,15 @@
 .idea
 myGym/my_config.json
 myGym/config_test.json
+**/*.pyc
+**/*.swp
+MANIFEST
+*.egg*
+*.ipynb_checkpoints
+trained_models
+**/data/yolact/
+/.vscode
+build/
+**/dtdseamless/
+**/.directory
+/vae_datasets/

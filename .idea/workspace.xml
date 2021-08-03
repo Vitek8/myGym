@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="31fdb2b0-df66-42fa-88a9-b490197bcf25" name="Default Changelist" comment="update env" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +50,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../R2D2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -94,6 +91,7 @@
       <workItem from="1627980000614" duration="84000" />
       <workItem from="1627980130295" duration="12604000" />
       <workItem from="1627993955140" duration="308000" />
+      <workItem from="1627994276082" duration="312000" />
     </task>
     <task id="LOCAL-00001" summary="reward update">
       <created>1627894519713</created>
@@ -214,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627994119189</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="update env">
+      <created>1627994545484</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1627994545485</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,10 +250,10 @@
     <MESSAGE value="fully function task-switch" />
     <MESSAGE value="final editing of comments" />
     <MESSAGE value="gitignore update" />
-    <MESSAGE value="update env" />
     <MESSAGE value="edit joint limits" />
     <MESSAGE value="load filled btn model" />
     <MESSAGE value="change config file" />
-    <option name="LAST_COMMIT_MESSAGE" value="change config file" />
+    <MESSAGE value="update env" />
+    <option name="LAST_COMMIT_MESSAGE" value="update env" />
   </component>
 </project>

@@ -52,7 +52,7 @@ class BaseEnv(gym.Env):
         self.episode_final_distance = []
         self.episode_number = 0
         self.episode_steps = 0
-        self.episode_max_time = 25
+        self.episode_max_time = 60
         self.episode_info = ""
 
         # Set general params

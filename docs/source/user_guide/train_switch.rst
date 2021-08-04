@@ -11,8 +11,8 @@ The training will start with gui window and standstill visualization. New direct
 is created in the logdir, where tranining checkpoints, final model and other relevant 
 data are stored. 
 
-If you want to train robot with same goal, but with different behaviour, change in reward.py under class SwitchReward,
-values of coefficients: - k_w, k_d, k_a, values have to be <0; 1>.
+If you want to train robot with the same goal, but with different behaviour, change values of coefficients
+in reward.py under class SwitchReward: k_w, k_d, k_a, values have to be <0; 1>.
 
 
 Wait until the first evaluation after 50000 steps to check the progress:

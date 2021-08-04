@@ -249,18 +249,23 @@ class TaskModule():
                 self.env.robot.magnetize_object(self.env.task_objects[self.obs_sub[self.sub_idx][0]], contacts) #magnetize first object
                 self.sub_idx += 1 #continue with next subgoal
                 self.env.reward.reset() #reward reset
+
         elif self.task_type == "switch":
             if self.check_switch_threshold():
                 self.env.episode_over = True
-            elif self.check_time_exceeded():
+            elif self.env.episode_steps == self.env.max_steps:
                 self.env.episode_over = True
                 self.env.episode_failed = True
+                # self.env.episode_info = "Max amount of steps reached"
+
         elif self.task_type == "press":
             if self.check_press_threshold():
                 self.env.episode_over = True
-            elif self.check_time_exceeded():
+            elif self.env.episode_steps == self.env.max_steps:
                 self.env.episode_over = True
                 self.env.episode_failed = True
+                # self.env.episode_info = "Max amount of steps reached"
+
         elif contacts: #threshold for successful push/throw/pick'n'place
             self.env.episode_over = True
             if self.env.episode_steps == 1:

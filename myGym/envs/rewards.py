@@ -140,14 +140,15 @@ class SwitchReward(DistanceReward):
         self.y_bot_curr_pos = None
         self.z_bot_curr_pos = None
 
+        # auxiliary variables
         self.offset = None
         self.prev_angle = None
-        self.debug = True
+        self.debug = False
 
         # coefficients used to calculate reward
-        self.k_w = 0.1
-        self.k_d = 0.1
-        self.k_a = 1
+        self.k_w = 0.4    # coefficient for distance between actual position of robot's gripper and generated line
+        self.k_d = 0.3    # coefficients for absolute distance gripper and end position
+        self.k_a = 1      # coefficient for calculated angle reward
 
     def compute(self, observation):
         """
@@ -197,7 +198,7 @@ class SwitchReward(DistanceReward):
 
     def reset(self):
         """
-        Reset current positions of switch and robot, initial position of switch and robot and previous angle of switch.
+        Reset current positions of switch, robot, initial position of switch, robot and previous angle of switch.
         Call this after the end of an episode.
         """
         self.x_obj = None
@@ -214,12 +215,17 @@ class SwitchReward(DistanceReward):
         self.y_bot_curr_pos = None
         self.z_bot_curr_pos = None
 
+        # auxiliary variables
         self.offset = None
         self.prev_angle = None
 
     def get_accurate_gripper_position(self, gripper_position):
         """
         Calculate more accurate position of gripper
+        Params:
+            :param gripper_position: (list) Observation of the environment
+        Returns:
+            :return gripper_position: (list) Accurate position of gripper
         """
         gripper_orientation = self.env.p.getLinkState(self.env.robot.robot_uid, self.env.robot.end_effector_index)[1]
         gripper_matrix = self.env.p.getMatrixFromQuaternion(gripper_orientation)
@@ -232,6 +238,14 @@ class SwitchReward(DistanceReward):
         return gripper_position
 
     def set_variables(self, o1, o2):
+        """
+        Assign local values to global variables
+        Params:
+            :param o1: (list) Position of switch in space [x, y, z]
+            :param o2: (list) Position of robot in space [x, y, z]
+        Returns:
+            :return reward: (float) Reward signal for the environment
+        """
         if self.x_obj is None:
             self.x_obj = o1[0]
 
@@ -258,6 +272,13 @@ class SwitchReward(DistanceReward):
         self.z_bot_curr_pos = o2[2]
 
     def set_offset(self, x=0.0, y=0.0, z=0.0):
+        """
+        Set offset position of switch
+        Params:
+            :param x: (int) The number by which is coordinate x changed
+            :param y: (int) The number by which is coordinate y changed
+            :param z: (int) The number by which is coordinate z changed
+        """
         if self.offset is None:
             self.offset = True
             if self.x_obj > 0:
@@ -272,8 +293,19 @@ class SwitchReward(DistanceReward):
     @staticmethod
     def calc_direction_2d(x1, y1, x2, y2, x3, y3):
         """
-        This function calculates difference between point - (actual position of robot's gripper [x3, y3])
-        and line - (initial position of robot: [x1, y1], final position of robot: [x2, y2]) in 2D
+        Calculate difference between point - (actual position of robot's gripper P - [x3, y3])
+        and line - (perpendicular position from middle of switch: A - [x1, y1]; final position of robot: B - [x2, y2) in 2D
+        Params:
+            :param x1: (float) Coordinate x of switch
+            :param y1: (float) Coordinate y of switch
+            :param x2: (float) Coordinate x of final position of robot
+            :param y2: (float) Coordinate y of final position of robot
+            :param x3: (float) Coordinate x of robot's gripper
+            :param y3: (float) Coordinate y of robot's gripper
+        Returns:
+            :return x: (float) The nearest point[x] to robot's gripper on the line
+            :return y: (float) The nearest point[y] to robot's gripper on the line
+            :return d: (float) Distance between line and robot's gripper
         """
         x = x1 + ((x1 - x2) * (x1 * x2 + x1 * x3 - x2 * x3 + y1 * y2 + y1 * y3 - y2 * y3 - x1 ** 2 - y1 ** 2)) / (
                 x1 ** 2 - 2 * x1 * x2 + x2 ** 2 + y1 ** 2 - 2 * y1 * y2 + y2 ** 2)
@@ -286,8 +318,22 @@ class SwitchReward(DistanceReward):
     @staticmethod
     def calc_direction_3d(x1, y1, z1, x2, y2, z2, x3, y3, z3):
         """
-        This function calculates difference between point - (actual position of robot's gripper [x3, y3, z3])
-        and line - (initial position of robot: [x1, y1, z1], final position of robot: [x2, y2, z2]) in 3D
+        Calculate difference between point - (actual position of robot's gripper P - [x3, y3, z3])
+        and line - (perpendicular position from middle of switch: A - [x1, y1, z1]; final position of robot: B - [x2, y2, z2]) in 3D
+        Params:
+            :param x1: (float) Coordinate x of switch
+            :param y1: (float) Coordinate y of switch
+            :param z1: (float) Coordinate z of switch
+
+            :param x2: (float) Coordinate x of final position of robot
+            :param y2: (float) Coordinate y of final position of robot
+            :param z2: (float) Coordinate z of final position of robot
+
+            :param x3: (float) Coordinate x of robot's gripper
+            :param y3: (float) Coordinate y of robot's gripper
+            :param z3: (float) Coordinate z of robot's gripper
+        Returns:
+            :return d: (float) Distance between line and robot's gripper
         """
         x = x1 - ((x1 - x2) * (
                 x1 * (x1 - x2) - x3 * (x1 - x2) + y1 * (y1 - y2) - y3 * (y1 - y2) + z1 * (z1 - z2) - z3 * (
@@ -307,7 +353,9 @@ class SwitchReward(DistanceReward):
 
     def abs_diff(self):
         """
-        This function calculates absolute differance between task_object and gripper
+        Calculate absolute differance between task_object and gripper
+        Returns:
+            :return abs_diff: (float) Absolute distance to switch
         """
         x_diff = self.x_obj_curr_pos - self.x_bot_curr_pos
         y_diff = self.y_obj_curr_pos - self.y_bot_curr_pos
@@ -318,7 +366,9 @@ class SwitchReward(DistanceReward):
 
     def get_angle(self):
         """
-        This function calculates angle of switch
+        Calculate angle of switch
+        Returns:
+            :return angle: (int) Angle of switch
         """
         if self.task.task_type == "switch":
             if len(self.task.current_task_objects) != 2:
@@ -342,6 +392,11 @@ class SwitchReward(DistanceReward):
             raise "expected task_type - switch"
 
     def calc_angle_reward(self, angle):
+        """
+        Calculate additional reward for switch task
+        Returns:
+            :return reward: (int) Additional reward value
+        """
         if self.task.task_type == "switch":
             if self.prev_angle is None:
                 self.prev_angle = angle
@@ -407,6 +462,9 @@ class ButtonReward(DistanceReward):
         observation = observation["observation"] if isinstance(observation, dict) else observation
         o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
         gripper_position = self.get_accurate_gripper_position(observation[3:6])
+        self.set_variables(o1, gripper_position)
+        self.set_offset()
+
 
         reward = 0
         self.task.check_distance_threshold(observation=observation)
@@ -534,7 +592,7 @@ class ButtonReward(DistanceReward):
         abs_diff = sqrt(x_diff ** 2 + y_diff ** 2 + z_diff ** 2)
         return abs_diff
 
-    def is_switched(self):
+    def is_pressed(self):
         """
         This function calculates angle of switch
         """

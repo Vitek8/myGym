@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from stable_baselines import results_plotter
 import os
+from myGym.vector import Vector
 
 
 class Reward:
@@ -165,7 +166,7 @@ class SwitchReward(DistanceReward):
         gripper_position = self.get_accurate_gripper_position(observation[3:6])
         self.set_variables(o1, gripper_position)    # save local positions of task_object and gripper to global positions
         self.set_offset(x=-0.1, z=0.25)
-
+        # print(self.env.robot.observe_all_links())
         if self.x_obj > 0:
             if self.debug:
                 self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [-0.7, self.y_obj, self.z_obj],
@@ -321,9 +322,9 @@ class SwitchReward(DistanceReward):
         Calculate difference between point - (actual position of robot's gripper P - [x3, y3, z3])
         and line - (perpendicular position from middle of switch: A - [x1, y1, z1]; final position of robot: B - [x2, y2, z2]) in 3D
         Params:
-            :param x1: (float) Coordinate x of switch
-            :param y1: (float) Coordinate y of switch
-            :param z1: (float) Coordinate z of switch
+            :param x1: (float) Coordinate x of initial position of robot
+            :param y1: (float) Coordinate y of initial position of robot
+            :param z1: (float) Coordinate z of initial position of robot
 
             :param x2: (float) Coordinate x of final position of robot
             :param y2: (float) Coordinate y of final position of robot
@@ -446,8 +447,21 @@ class ButtonReward(DistanceReward):
         self.y_bot_curr_pos = None
         self.z_bot_curr_pos = None
 
+        self.debug = True
         self.offset = None
-        self.prev_angle = None
+        self.prev_press = None
+
+        self.k_w = 0.8
+        self.k_d = 0.5
+        self.k_a = 0.6
+
+    def set_vector_len(self, vector, len):
+        norm = math.sqrt(np.dot(vector, vector))
+        if norm == 0:
+            return 0
+        vector = vector * (1/norm)
+        return vector * len
+
 
     def compute(self, observation):
         """
@@ -463,10 +477,26 @@ class ButtonReward(DistanceReward):
         o1 = observation[0:3] if self.env.reward_type != "2dvu" else observation[0:int(len(observation[:-3])/2)]
         gripper_position = self.get_accurate_gripper_position(observation[3:6])
         self.set_variables(o1, gripper_position)
-        self.set_offset()
+        self.set_offset(z=0.16)
 
+        v1 = Vector([self.x_obj, self.y_obj, self.z_obj], [self.x_obj, self.y_obj, 1], self.env)
+        v2 = Vector([self.x_obj, self.y_obj, self.z_obj], gripper_position, self.env)
 
-        reward = 0
+        var = np.dot(self.set_vector_len(v1.vector, 1), self.set_vector_len(v2.vector, 1))
+
+        w = self.calc_direction_3d(self.x_obj, self.y_obj, 1, self.x_obj, self.y_obj, self.z_obj,
+                               self.x_bot_curr_pos, self.y_bot_curr_pos, self.z_bot_curr_pos)
+        d = self.abs_diff()
+        a = self.calc_angle_reward(self.is_pressed())
+        reward = - self.k_w * w - self.k_d * d + self.k_a * a
+        print(f"var: {var}, distance: {d}, press: {a}")
+        if self.debug:
+            self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], [self.x_obj, self.y_obj, 1],
+                                        lineColorRGB=(0, 0.5, 1), lineWidth=3, lifeTime=1)
+
+            self.env.p.addUserDebugLine([self.x_obj, self.y_obj, self.z_obj], gripper_position,
+                                        lineColorRGB=(1, 0, 0), lineWidth=3, lifeTime=0.03)
+
         self.task.check_distance_threshold(observation=observation)
         self.rewards_history.append(reward)
         return reward
@@ -491,7 +521,7 @@ class ButtonReward(DistanceReward):
         self.z_bot_curr_pos = None
 
         self.offset = None
-        self.prev_angle = None
+        self.prev_press = None
 
     def get_accurate_gripper_position(self, gripper_position):
         """
@@ -536,14 +566,10 @@ class ButtonReward(DistanceReward):
     def set_offset(self, x=0.0, y=0.0, z=0.0):
         if self.offset is None:
             self.offset = True
-            if self.x_obj > 0:
-                self.x_obj -= x
-                self.y_obj += y
-                self.z_obj += z
-            else:
-                self.x_obj += x
-                self.y_obj += y
-                self.z_obj += z
+            self.x_obj += x
+            self.y_obj += y
+            self.z_obj += z
+
 
     @staticmethod
     def calc_direction_2d(x1, y1, x2, y2, x3, y3):
@@ -617,26 +643,29 @@ class ButtonReward(DistanceReward):
         else:
             raise "expected task_type - press"
 
-    def calc_angle_reward(self, angle):
+    def calc_angle_reward(self, press):
         if self.task.task_type == "press":
-            if self.prev_angle is None:
-                self.prev_angle = angle
+            press *= 100
+            press = int(press)
+            if self.prev_press is None:
+                self.prev_press = press
 
-            if angle < 0:
-                k = angle // 2
+            if press < 0:
+                k = press // 2
 
             else:
-                k = angle // 2
+                k = press // 2
 
-            reward = k * angle
+            reward = k * press
+            reward /= 1000
 
-            if reward >= 162:
-                reward += 50
-            reward /= 100
-            if self.prev_angle == angle:
+            if reward >= 14:
+                reward += 2
+            reward /= 10
+            if self.prev_press == press:
                 reward = 0
 
-            self.prev_angle = angle
+            self.prev_press = press
 
             return reward
         else:

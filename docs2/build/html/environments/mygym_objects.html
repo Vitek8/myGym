@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Objects &mdash; mygym 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/mygym_theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Robots" href="mygym_robots.html" />
+    <link rel="prev" title="Workspaces" href="workspace.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mygym
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">How to</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualization.html">Visualize workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/basic_training.html">Train a robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorial_parametric.html">Set parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorial_config.html">Edit config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_camera.html">Train robot - supervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_vae.html">Train a robot - unsupervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/parallel_training.html">Train in parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_switch.html">Train a robot - switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tensorboard.html">Evaluate with tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/test_model.html">Test trained model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How to - advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/write_reward.html">Create custom reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/create_workspace.html">Create custom workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/create_network.html">Create custom network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Generate dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gym</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="workspace.html">Workspaces</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#geometric">Geometric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assembly">Assembly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#toys">Toys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#household">Household</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storage">Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#furniture">Furniture</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mygym_robots.html">Robots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gym_env.html">GymEnv</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Baselines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baselines/table.html">Baseline networks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Important classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/base_env.html">BaseEnv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/robot.html">Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/task.html">Task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/reward.html">Reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/vision.html">Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/camera.html">Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/env_object.html">Object</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mygym</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Objects</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/environments/mygym_objects.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="objects">
+<span id="mygym-objects"></span><h1>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h1>
+<p>The toolkit allows you to add various objects to your training environment. Here are presented the implemented objects sorted into categories. You can also add custom object by placing its model and URDF file into envs/objects directory. For details about how myGym works with objects in the simulation, see <a class="reference internal" href="../other/env_object.html#env-object"><span class="std std-ref">Object</span></a>.</p>
+<div class="section" id="geometric">
+<h2>Geometric<a class="headerlink" href="#geometric" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>cube, cylinder, prism, sphere, pyramid, torus</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/geometric_pic_b.png"><img alt="Geometric objects" src="../_images/geometric_pic_b.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="assembly">
+<h2>Assembly<a class="headerlink" href="#assembly" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>car_roof, cube_holes, ex_bucket, hammer, nut, peg_screw, pliers, screw_round, screwdriver, sphere_holes, wafer, wheel, wrench</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/assembly_pic_b.png"><img alt="Assembly objects" src="../_images/assembly_pic_b.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="toys">
+<h2>Toys<a class="headerlink" href="#toys" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>bird, bucket, bus, car, dog, duck, helicopter, horse, lorry, plane, rake, shovel, tractor, train, trex, truck</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/toys_pic_b.png"><img alt="Toys objects" src="../_images/toys_pic_b.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="household">
+<h2>Household<a class="headerlink" href="#household" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>bottle, bowl, fork, glass, jug, knife, mug, pan, plate, sharp_knife, spatula, spoon</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/household_pic_b.png"><img alt="Household objects" src="../_images/household_pic_b.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="storage">
+<h2>Storage<a class="headerlink" href="#storage" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>bin, box, crate, target, trash</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/storage_pic_b.png"><img alt="Storage objects" src="../_images/storage_pic_b.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="furniture">
+<h2>Furniture<a class="headerlink" href="#furniture" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>armchair, bookcase, chair, cupboard, sofa, table</p></li>
+</ul>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/furniture_pic_b.png"><img alt="Furniture objects" src="../_images/furniture_pic_b.png" style="width: 700px;" /></a>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="mygym_robots.html" class="btn btn-neutral float-right" title="Robots" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="workspace.html" class="btn btn-neutral float-left" title="Workspaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nikita Sokovnin.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

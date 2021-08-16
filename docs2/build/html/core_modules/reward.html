@@ -1,0 +1,796 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Reward &mdash; mygym 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/mygym_theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Vision" href="vision.html" />
+    <link rel="prev" title="Task" href="task.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mygym
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">How to</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualization.html">Visualize workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/basic_training.html">Train a robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorial_parametric.html">Set parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorial_config.html">Edit config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_camera.html">Train robot - supervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_vae.html">Train a robot - unsupervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/parallel_training.html">Train in parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_switch.html">Train a robot - switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tensorboard.html">Evaluate with tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/test_model.html">Test trained model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How to - advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/write_reward.html">Create custom reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/create_workspace.html">Create custom workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/create_network.html">Create custom network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Generate dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gym</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../environments/workspace.html">Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/mygym_objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/mygym_robots.html">Robots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/gym_env.html">GymEnv</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Baselines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baselines/table.html">Baseline networks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Important classes</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="base_env.html">BaseEnv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robot.html">Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task.html">Task</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vision.html">Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/camera.html">Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/env_object.html">Object</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mygym</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Reward</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/core_modules/reward.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reward">
+<span id="reward-class"></span><h1>Reward<a class="headerlink" href="#reward" title="Permalink to this headline">¶</a></h1>
+<p>Reward is the key element in Reinforcement Learning. Each training, an instance of reward class is created and serves for reward signal generation during training steps. In myGym Reward Module there are three basic types of reward signal implemented: <strong>Distance</strong>, <strong>Complex Distance</strong> and <strong>Sparse</strong>. You can choose on of them to be used in training by specifying <strong>reward=</strong> eiher <strong>distance</strong>, <strong>complex_distance</strong> or <strong>sparse</strong> in <em>config file</em> or pass it as a command line argument.</p>
+<span class="target" id="module-myGym.envs.rewards"></span><dl class="py class">
+<dt class="sig sig-object py" id="myGym.envs.rewards.Reward">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">myGym.envs.rewards.</span></span><span class="sig-name descname"><span class="pre">Reward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#Reward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.Reward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reward base class for reward signal calculation and visualization</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param env</dt>
+<dd class="field-odd"><p>(object) Environment, where the training takes place</p>
+</dd>
+<dt class="field-even">param task</dt>
+<dd class="field-even"><p>(object) Task that is being trained, instance of a class TaskModule</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.Reward.visualize_reward_over_steps">
+<span class="sig-name descname"><span class="pre">visualize_reward_over_steps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#Reward.visualize_reward_over_steps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.Reward.visualize_reward_over_steps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot and save a graph of reward values assigned to individual steps during an episode. Call this method after the end of the episode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.Reward.visualize_reward_over_episodes">
+<span class="sig-name descname"><span class="pre">visualize_reward_over_episodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#Reward.visualize_reward_over_episodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.Reward.visualize_reward_over_episodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot and save a graph of cumulative reward values assigned to individual episodes. Call this method to plot data from the current and all previous episodes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="myGym.envs.rewards.DistanceReward">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">myGym.envs.rewards.</span></span><span class="sig-name descname"><span class="pre">DistanceReward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#DistanceReward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.DistanceReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reward class for reward signal calculation based on distance differences between 2 objects
+Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param env</dt>
+<dd class="field-odd"><p>(object) Environment, where the training takes place</p>
+</dd>
+<dt class="field-even">param task</dt>
+<dd class="field-even"><p>(object) Task that is being trained, instance of a class TaskModule</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.DistanceReward.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#DistanceReward.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.DistanceReward.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute reward signal based on distance between 2 objects. The position of the objects must be present in observation.
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param observation</dt>
+<dd class="field-odd"><p>(list) Observation of the environment</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return reward</dt>
+<dd class="field-odd"><p>(float) Reward signal for the environment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.DistanceReward.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#DistanceReward.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.DistanceReward.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset stored value of distance between 2 objects. Call this after the end of an episode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.DistanceReward.calc_dist_diff">
+<span class="sig-name descname"><span class="pre">calc_dist_diff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj1_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj2_position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#DistanceReward.calc_dist_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.DistanceReward.calc_dist_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate change in the distance between 2 objects in previous and in current step. Normalize the change by the value of distance in previous step.
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param obj1_position</dt>
+<dd class="field-odd"><p>(list) Position of the first object</p>
+</dd>
+<dt class="field-even">param obj2_position</dt>
+<dd class="field-even"><p>(list) Position of the second object</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return norm_diff</dt>
+<dd class="field-odd"><p>(float) Normalized difference of distances between 2 objects in previsous and in current step</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">myGym.envs.rewards.</span></span><span class="sig-name descname"><span class="pre">SwitchReward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reward class for reward signal calculation based on distance differences between 2 objects,
+angle of switch and difference between point and line (function used for that: calc_direction_3d()).
+Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param env</dt>
+<dd class="field-odd"><p>(object) Environment, where the training takes place</p>
+</dd>
+<dt class="field-even">param task</dt>
+<dd class="field-even"><p>(object) Task that is being trained, instance of a class TaskModule</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.compute" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Compute reward signal based on distance between 2 objects, angle of switch and difference between point and line</dt><dd><p>(function used for that: calc_direction_3d()).</p>
+</dd>
+</dl>
+<p>The position of the objects must be present in observation.
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param observation</dt>
+<dd class="field-odd"><p>(list) Observation of the environment</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return reward</dt>
+<dd class="field-odd"><p>(float) Reward signal for the environment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset current positions of switch, robot, initial position of switch, robot and previous angle of switch.
+Call this after the end of an episode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.get_accurate_gripper_position">
+<span class="sig-name descname"><span class="pre">get_accurate_gripper_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gripper_position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.get_accurate_gripper_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.get_accurate_gripper_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate more accurate position of gripper
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param gripper_position</dt>
+<dd class="field-odd"><p>(list) Observation of the environment</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return gripper_position</dt>
+<dd class="field-odd"><p>(list) Accurate position of gripper</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.set_variables">
+<span class="sig-name descname"><span class="pre">set_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">o2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.set_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.set_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign local values to global variables
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param o1</dt>
+<dd class="field-odd"><p>(list) Position of switch in space [x, y, z]</p>
+</dd>
+<dt class="field-even">param o2</dt>
+<dd class="field-even"><p>(list) Position of robot in space [x, y, z]</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return reward</dt>
+<dd class="field-odd"><p>(float) Reward signal for the environment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.set_offset">
+<span class="sig-name descname"><span class="pre">set_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.set_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.set_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set offset position of switch
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param x</dt>
+<dd class="field-odd"><p>(int) The number by which is coordinate x changed</p>
+</dd>
+<dt class="field-even">param y</dt>
+<dd class="field-even"><p>(int) The number by which is coordinate y changed</p>
+</dd>
+<dt class="field-odd">param z</dt>
+<dd class="field-odd"><p>(int) The number by which is coordinate z changed</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.calc_direction_2d">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">calc_direction_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.calc_direction_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.calc_direction_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate difference between point - (actual position of robot’s gripper P - [x3, y3])
+and line - (perpendicular position from middle of switch: A - [x1, y1]; final position of robot: B - [x2, y2) in 2D
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param x1</dt>
+<dd class="field-odd"><p>(float) Coordinate x of switch</p>
+</dd>
+<dt class="field-even">param y1</dt>
+<dd class="field-even"><p>(float) Coordinate y of switch</p>
+</dd>
+<dt class="field-odd">param x2</dt>
+<dd class="field-odd"><p>(float) Coordinate x of final position of robot</p>
+</dd>
+<dt class="field-even">param y2</dt>
+<dd class="field-even"><p>(float) Coordinate y of final position of robot</p>
+</dd>
+<dt class="field-odd">param x3</dt>
+<dd class="field-odd"><p>(float) Coordinate x of robot’s gripper</p>
+</dd>
+<dt class="field-even">param y3</dt>
+<dd class="field-even"><p>(float) Coordinate y of robot’s gripper</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return x</dt>
+<dd class="field-odd"><p>(float) The nearest point[x] to robot’s gripper on the line</p>
+</dd>
+<dt class="field-even">return y</dt>
+<dd class="field-even"><p>(float) The nearest point[y] to robot’s gripper on the line</p>
+</dd>
+<dt class="field-odd">return d</dt>
+<dd class="field-odd"><p>(float) Distance between line and robot’s gripper</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.calc_direction_3d">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">calc_direction_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.calc_direction_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.calc_direction_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate difference between point - (actual position of robot’s gripper P - [x3, y3, z3])
+and line - (perpendicular position from middle of switch: A - [x1, y1, z1]; final position of robot: B - [x2, y2, z2]) in 3D
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param x1</dt>
+<dd class="field-odd"><p>(float) Coordinate x of switch</p>
+</dd>
+<dt class="field-even">param y1</dt>
+<dd class="field-even"><p>(float) Coordinate y of switch</p>
+</dd>
+<dt class="field-odd">param z1</dt>
+<dd class="field-odd"><p>(float) Coordinate z of switch</p>
+</dd>
+<dt class="field-even">param x2</dt>
+<dd class="field-even"><p>(float) Coordinate x of final position of robot</p>
+</dd>
+<dt class="field-odd">param y2</dt>
+<dd class="field-odd"><p>(float) Coordinate y of final position of robot</p>
+</dd>
+<dt class="field-even">param z2</dt>
+<dd class="field-even"><p>(float) Coordinate z of final position of robot</p>
+</dd>
+<dt class="field-odd">param x3</dt>
+<dd class="field-odd"><p>(float) Coordinate x of robot’s gripper</p>
+</dd>
+<dt class="field-even">param y3</dt>
+<dd class="field-even"><p>(float) Coordinate y of robot’s gripper</p>
+</dd>
+<dt class="field-odd">param z3</dt>
+<dd class="field-odd"><p>(float) Coordinate z of robot’s gripper</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return d</dt>
+<dd class="field-odd"><p>(float) Distance between line and robot’s gripper</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.abs_diff">
+<span class="sig-name descname"><span class="pre">abs_diff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.abs_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.abs_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate absolute differance between task_object and gripper
+Returns:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">return abs_diff</dt>
+<dd class="field-odd"><p>(float) Absolute distance to switch</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.get_angle">
+<span class="sig-name descname"><span class="pre">get_angle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.get_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.get_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate angle of switch
+Returns:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">return angle</dt>
+<dd class="field-odd"><p>(int) Angle of switch</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SwitchReward.calc_angle_reward">
+<span class="sig-name descname"><span class="pre">calc_angle_reward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SwitchReward.calc_angle_reward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SwitchReward.calc_angle_reward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate additional reward for switch task
+Returns:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">return reward</dt>
+<dd class="field-odd"><p>(int) Additional reward value</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">myGym.envs.rewards.</span></span><span class="sig-name descname"><span class="pre">ButtonReward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reward class for reward signal calculation based on distance differences between 2 objects,
+angle of switch and difference between point and line (function used for that: calc_direction_3d()).
+Parameters:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param env</dt>
+<dd class="field-odd"><p>(object) Environment, where the training takes place</p>
+</dd>
+<dt class="field-even">param task</dt>
+<dd class="field-even"><p>(object) Task that is being trained, instance of a class TaskModule</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward.compute" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Compute reward signal based on distance between 2 objects, angle of switch and difference between point and line</dt><dd><p>(function used for that: calc_direction_3d()).</p>
+</dd>
+</dl>
+<p>The position of the objects must be present in observation.
+Params:</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param observation</dt>
+<dd class="field-odd"><p>(list) Observation of the environment</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return reward</dt>
+<dd class="field-odd"><p>(float) Reward signal for the environment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset current positions of switch and robot, initial position of switch and robot and previous angle of switch.
+Call this after the end of an episode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward.get_accurate_gripper_position">
+<span class="sig-name descname"><span class="pre">get_accurate_gripper_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gripper_position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward.get_accurate_gripper_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward.get_accurate_gripper_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate more accurate position of gripper</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward.calc_direction_2d">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">calc_direction_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward.calc_direction_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward.calc_direction_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates difference between point - (actual position of robot’s gripper [x3, y3])
+and line - (initial position of robot: [x1, y1], final position of robot: [x2, y2]) in 2D</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward.calc_direction_3d">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">calc_direction_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward.calc_direction_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward.calc_direction_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates difference between point - (actual position of robot’s gripper [x3, y3, z3])
+and line - (initial position of robot: [x1, y1, z1], final position of robot: [x2, y2, z2]) in 3D</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward.abs_diff">
+<span class="sig-name descname"><span class="pre">abs_diff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward.abs_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward.abs_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates absolute differance between task_object and gripper</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ButtonReward.is_pressed">
+<span class="sig-name descname"><span class="pre">is_pressed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ButtonReward.is_pressed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ButtonReward.is_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates angle of switch</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ComplexDistanceReward">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">myGym.envs.rewards.</span></span><span class="sig-name descname"><span class="pre">ComplexDistanceReward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ComplexDistanceReward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ComplexDistanceReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reward class for reward signal calculation based on distance differences between 3 objects, e.g. 2 objects and gripper for complex tasks</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param env</dt>
+<dd class="field-odd"><p>(object) Environment, where the training takes place</p>
+</dd>
+<dt class="field-even">param task</dt>
+<dd class="field-even"><p>(object) Task that is being trained, instance of a class TaskModule</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ComplexDistanceReward.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ComplexDistanceReward.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ComplexDistanceReward.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute reward signal based on distances between 3 objects. The position of the objects must be present in observation.</p>
+<dl class="simple">
+<dt>Params:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param observation</dt>
+<dd class="field-odd"><p>(list) Observation of the environment</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return reward</dt>
+<dd class="field-odd"><p>(float) Reward signal for the environment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ComplexDistanceReward.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ComplexDistanceReward.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ComplexDistanceReward.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset stored value of distance between 2 objects. Call this after the end of an episode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.ComplexDistanceReward.calc_dist_diff">
+<span class="sig-name descname"><span class="pre">calc_dist_diff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj1_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj2_position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj3_position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#ComplexDistanceReward.calc_dist_diff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.ComplexDistanceReward.calc_dist_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate change in the distances between 3 objects in previous and in current step. Normalize the change by the value of distance in previous step.</p>
+<dl class="simple">
+<dt>Params:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param obj1_position</dt>
+<dd class="field-odd"><p>(list) Position of the first object</p>
+</dd>
+<dt class="field-even">param obj2_position</dt>
+<dd class="field-even"><p>(list) Position of the second object</p>
+</dd>
+<dt class="field-odd">param obj3_position</dt>
+<dd class="field-odd"><p>(list) Position of the third object</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return norm_diff</dt>
+<dd class="field-odd"><p>(float) Sum of normalized differences of distances between 3 objects in previsous and in current step</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SparseReward">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">myGym.envs.rewards.</span></span><span class="sig-name descname"><span class="pre">SparseReward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SparseReward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SparseReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reward class for sparse reward signal</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param env</dt>
+<dd class="field-odd"><p>(object) Environment, where the training takes place</p>
+</dd>
+<dt class="field-even">param task</dt>
+<dd class="field-even"><p>(object) Task that is being trained, instance of a class TaskModule</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.rewards.SparseReward.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/rewards.html#SparseReward.compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.rewards.SparseReward.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute sparse reward signal. Reward is 0 when goal is reached, -1 in every other step.</p>
+<dl class="simple">
+<dt>Params:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param observation</dt>
+<dd class="field-odd"><p>Ignored</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return reward</dt>
+<dd class="field-odd"><p>(float) Reward signal for the environment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="vision.html" class="btn btn-neutral float-right" title="Vision" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="task.html" class="btn btn-neutral float-left" title="Task" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nikita Sokovnin.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

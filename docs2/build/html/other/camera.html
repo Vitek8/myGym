@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Camera &mdash; mygym 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/mygym_theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Object" href="env_object.html" />
+    <link rel="prev" title="Vision" href="../core_modules/vision.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mygym
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">How to</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/visualization.html">Visualize workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/basic_training.html">Train a robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorial_parametric.html">Set parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorial_config.html">Edit config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_camera.html">Train robot - supervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_vae.html">Train a robot - unsupervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/parallel_training.html">Train in parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/train_switch.html">Train a robot - switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tensorboard.html">Evaluate with tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/test_model.html">Test trained model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How to - advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/write_reward.html">Create custom reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/create_workspace.html">Create custom workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/create_network.html">Create custom network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/dataset.html">Generate dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gym</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../environments/workspace.html">Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/mygym_objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/mygym_robots.html">Robots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/gym_env.html">GymEnv</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Baselines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baselines/table.html">Baseline networks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Important classes</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/base_env.html">BaseEnv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/robot.html">Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/task.html">Task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/reward.html">Reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/vision.html">Vision</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env_object.html">Object</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mygym</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Camera</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/other/camera.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="camera">
+<span id="id1"></span><h1>Camera<a class="headerlink" href="#camera" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-myGym.envs.camera"></span><dl class="py class">
+<dt class="sig sig-object py" id="myGym.envs.camera.Camera">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">myGym.envs.camera.</span></span><span class="sig-name descname"><span class="pre">Camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">up_vector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">up_axis_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">180</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_of_view</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">near_plane_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">far_plane_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_absolute_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/camera.html#Camera"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.camera.Camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Camera class for rendering</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param env</dt>
+<dd class="field-odd"><p>(CameraEnv) Environment in which camera is located</p>
+</dd>
+<dt class="field-even">param position</dt>
+<dd class="field-even"><p>(list) Eye position in Cartesian world coordinates</p>
+</dd>
+<dt class="field-odd">prarm target_position</dt>
+<dd class="field-odd"><p>(list) Position of the target point</p>
+</dd>
+<dt class="field-even">param up_vector</dt>
+<dd class="field-even"><p>(list) Up vector of the camera</p>
+</dd>
+<dt class="field-odd">param up_axis_index</dt>
+<dd class="field-odd"><p>(int) Either 1 for Y or 2 for Z axis up</p>
+</dd>
+<dt class="field-even">param yaw</dt>
+<dd class="field-even"><p>(float) Yaw angle in degrees left/right around up-axis</p>
+</dd>
+<dt class="field-odd">param pitch</dt>
+<dd class="field-odd"><p>(float) Pitch in degrees up/down</p>
+</dd>
+<dt class="field-even">param roll</dt>
+<dd class="field-even"><p>(float) Roll in degrees around forward vector</p>
+</dd>
+<dt class="field-odd">param distance</dt>
+<dd class="field-odd"><p>(float) Distance from eye to focus point</p>
+</dd>
+<dt class="field-even">param field_of_view</dt>
+<dd class="field-even"><p>(float) Field of view</p>
+</dd>
+<dt class="field-odd">param near_plane_distance</dt>
+<dd class="field-odd"><p>(float) Near plane distance</p>
+</dd>
+<dt class="field-even">param far_plane_distance</dt>
+<dd class="field-even"><p>(float) Far plane distance</p>
+</dd>
+<dt class="field-odd">param is_absolute_position</dt>
+<dd class="field-odd"><p>(bool) Compute view matrix using poistion or yaw,pitch,roll</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.camera.Camera.set_parameters">
+<span class="sig-name descname"><span class="pre">set_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_of_view</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">near_plane_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">far_plane_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/camera.html#Camera.set_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.camera.Camera.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set camera position and captured image parameters</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param position</dt>
+<dd class="field-odd"><p>(list) Eye position in Cartesian world coordinates</p>
+</dd>
+<dt class="field-even">prarm target_position</dt>
+<dd class="field-even"><p>(list) Position of the target point</p>
+</dd>
+<dt class="field-odd">param yaw</dt>
+<dd class="field-odd"><p>(float) Yaw angle in degrees left/right around up-axis</p>
+</dd>
+<dt class="field-even">param pitch</dt>
+<dd class="field-even"><p>(float) Pitch in degrees up/down</p>
+</dd>
+<dt class="field-odd">param roll</dt>
+<dd class="field-odd"><p>(float) Roll in degrees around forward vector</p>
+</dd>
+<dt class="field-even">param distance</dt>
+<dd class="field-even"><p>(float) Distance from eye to focus point</p>
+</dd>
+<dt class="field-odd">param field_of_view</dt>
+<dd class="field-odd"><p>(float) Field of view</p>
+</dd>
+<dt class="field-even">param near_plane_distance</dt>
+<dd class="field-even"><p>(float) Near plane distance</p>
+</dd>
+<dt class="field-odd">param far_plane_distance</dt>
+<dd class="field-odd"><p>(float) Far plane distance</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.camera.Camera.recompute_matrixes">
+<span class="sig-name descname"><span class="pre">recompute_matrixes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/camera.html#Camera.recompute_matrixes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.camera.Camera.recompute_matrixes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute view and projection matrixes needed for rendering</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.camera.Camera.project_point_to_image">
+<span class="sig-name descname"><span class="pre">project_point_to_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/camera.html#Camera.project_point_to_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.camera.Camera.project_point_to_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Project 3D point in Cartesian world coordinates to 2D point in pixel space</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param point</dt>
+<dd class="field-odd"><p>(list) 3D point in Cartesian world coordinates</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return 2d_point</dt>
+<dd class="field-odd"><p>(list) 2D coordinates of point on image</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.camera.Camera.get_opencv_camera_matrix_values">
+<span class="sig-name descname"><span class="pre">get_opencv_camera_matrix_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/camera.html#Camera.get_opencv_camera_matrix_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.camera.Camera.get_opencv_camera_matrix_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get values of OpenCV matrix</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return values</dt>
+<dd class="field-odd"><p>(dict) fx, fy, cx, cy values</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="myGym.envs.camera.Camera.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/myGym/envs/camera.html#Camera.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#myGym.envs.camera.Camera.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get RGB image,depth image and segmentation mask from the camera</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">return data</dt>
+<dd class="field-odd"><p>(dict) Image, depth, segmentation_mask</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="env_object.html" class="btn btn-neutral float-right" title="Object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../core_modules/vision.html" class="btn btn-neutral float-left" title="Vision" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nikita Sokovnin.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

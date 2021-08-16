@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Create custom workspace &mdash; mygym 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/mygym_theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Create custom network" href="create_network.html" />
+    <link rel="prev" title="Create custom reward" href="write_reward.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mygym
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">How to</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualize workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_training.html">Train a robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_parametric.html">Set parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_config.html">Edit config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="train_camera.html">Train robot - supervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="train_vae.html">Train a robot - unsupervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallel_training.html">Train in parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="train_switch.html">Train a robot - switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tensorboard.html">Evaluate with tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_model.html">Test trained model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How to - advanced</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="write_reward.html">Create custom reward</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Create custom workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_network.html">Create custom network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Generate dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gym</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../environments/workspace.html">Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/mygym_objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/mygym_robots.html">Robots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environments/gym_env.html">GymEnv</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Baselines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baselines/table.html">Baseline networks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Important classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/base_env.html">BaseEnv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/robot.html">Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/task.html">Task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/reward.html">Reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_modules/vision.html">Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/camera.html">Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/env_object.html">Object</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mygym</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Create custom workspace</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user_guide/create_workspace.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="create-custom-workspace">
+<span id="create-workspace"></span><h1>Create custom workspace<a class="headerlink" href="#create-custom-workspace" title="Permalink to this headline">¶</a></h1>
+<p>MyGym toolkit is designed to be modular and so is the environment
+<a class="reference internal" href="../environments/gym_env.html#gym-env"><span class="std std-ref">GymEnv</span></a>. It includes several <a class="reference internal" href="../environments/workspace.html#workspace"><span class="std std-ref">Workspaces</span></a> among which you
+can easily alternate to add variability to your training. This tutorial
+shows how to create and add your custom workspace into Gym and train
+your task there.</p>
+<p>The definition of <a class="reference internal" href="../environments/gym_env.html#gym-env"><span class="std std-ref">GymEnv</span></a> is <a class="reference external" href="https://github.com/incognite-lab/myGym/blob/master/myGym/envs/gym_env.py">here</a>. There you can find the definitions of existing
+workspaces in the <em>self.workspace_dict</em> dictionary.</p>
+<p>Choose a key for
+your workspace and add new value with its definition into this
+<em>self.workspace_dict</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span> <span class="o">=</span>  <span class="p">{</span><span class="s1">&#39;myworkspace&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;myworkspace.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;mytexture.jpg&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                        <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                        <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.56</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.71</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">3.99</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.43</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.76</span><span class="p">,</span> <span class="mf">2.68</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.54</span><span class="p">,</span> <span class="mf">1.19</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">]],</span>
+                                                    <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.53</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.62</span><span class="p">,</span> <span class="mf">0.59</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.24</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.95</span><span class="p">,</span> <span class="mf">0.83</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.28</span><span class="p">,</span> <span class="mf">2.53</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.53</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">]]},</span>
+                                        <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">]},</span>
+                                        <span class="o">...</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>You need to provide name of the urdf definition file of the model of
+your workspace and optionally a path to the texture you want to apply
+on the model. The urdf should contain correct position, orientation and
+scale of the model, to be loaded into the Gym properly. You will need
+two urdf definition files - one with visual and collision definitions
+and one with visual definition only. Store these files to the proper
+locations: <a class="reference external" href="https://github.com/incognite-lab/myGym/tree/master/myGym/envs/rooms/collision">collision</a>
+and <a class="reference external" href="https://github.com/incognite-lab/myGym/tree/master/myGym/envs/rooms/visual">visual</a>
+respectively. This way you ensure that the collision detection will
+work during training in your custom workspace and that a visual copy
+of your workspace will be visible while training in another.</p>
+<p>To make things easier, we recommend to place the origin of the
+Cartesian coordinate frame to the position and orientation known with
+respect to the workspace. Use the transform value for this purpose.</p>
+<p>Define position and orientation within your workspace, where the robot
+should be initialized. If you applied transform, use the new coordinates
+now.</p>
+<p>Define position and target position of cameras accordingly. The cameras
+are used for visualization and image rendering for vision modules.</p>
+<p>Lastly, define volume within your workspace, where task objects are
+allowed to occur. You can also adjust this parameter later using
+<em>object_sampling_area</em> parameter.</p>
+<p>To start your custom training, set your new workspace
+keyword as the <em>workspace</em> parameter in the config file:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;workspace&quot;:&quot;myworkspace&quot;,</span></code></p>
+<p>or in the command line:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">train.py</span> <span class="pre">--workspace=myworkspace</span></code></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="create_network.html" class="btn btn-neutral float-right" title="Create custom network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="write_reward.html" class="btn btn-neutral float-left" title="Create custom reward" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nikita Sokovnin.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

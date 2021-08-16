@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>myGym.envs.env_object &mdash; mygym 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/mygym_theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> mygym
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">How to</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/visualization.html">Visualize workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/basic_training.html">Train a robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/tutorial_parametric.html">Set parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/tutorial_config.html">Edit config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/train_camera.html">Train robot - supervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/train_vae.html">Train a robot - unsupervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/parallel_training.html">Train in parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/train_switch.html">Train a robot - switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/tensorboard.html">Evaluate with tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/test_model.html">Test trained model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How to - advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/write_reward.html">Create custom reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/create_workspace.html">Create custom workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/create_network.html">Create custom network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Generate dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gym</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/workspace.html">Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/mygym_objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/mygym_robots.html">Robots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/gym_env.html">GymEnv</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Baselines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baselines/table.html">Baseline networks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Important classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/base_env.html">BaseEnv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/robot.html">Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/task.html">Task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/reward.html">Reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/vision.html">Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/camera.html">Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/env_object.html">Object</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mygym</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>myGym.envs.env_object</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for myGym.envs.env_object</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copyfile</span>
+<span class="kn">import</span> <span class="nn">pybullet</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="n">currentdir</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;envs&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="EnvObject"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject">[docs]</a><span class="k">class</span> <span class="nc">EnvObject</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Env object class for dynamic object in PyBullet environment</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        :param urdf_path: (string) Path to model of object</span>
+<span class="sd">        :param position: (list) Position of object in the coordinate frame of the environment ([x,y,z])</span>
+<span class="sd">        :param orientation: (list) Orientation of object in the coordinate frame of the environment (quaternion [x,y,z,w])</span>
+<span class="sd">        :param fixed: (bool) Whether the object should have fixed position and orientation</span>
+<span class="sd">        :param pybullet_client: Which pybullet client the environment should refere to in case of parallel existence of multiple instances of this environment</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">urdf_path</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                 <span class="n">orientation</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">pybullet_client</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">pybullet_client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">urdf_path</span> <span class="o">=</span> <span class="n">urdf_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_position</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_orientation</span> <span class="o">=</span> <span class="n">orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixed</span> <span class="o">=</span> <span class="n">fixed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">urdf_path</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s2">&quot;virtual&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bounding_box</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">centroid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_centroid</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">uid</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">centroid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug_line_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cuboid_dimensions</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="EnvObject.set_color"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.set_color">[docs]</a>    <span class="k">def</span> <span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set desired color of object</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param color: (list) RGB color to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_rgba</span> <span class="o">=</span>  <span class="n">color</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">rgbaColor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">color_rgba</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnvObject.set_random_color"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.set_random_color">[docs]</a>    <span class="k">def</span> <span class="nf">set_random_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set random color of object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_rgba</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">get_random_color</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">rgbaColor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">color_rgba</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_color_rgba"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_color_rgba">[docs]</a>    <span class="k">def</span> <span class="nf">get_color_rgba</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get object&#39;s color</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self.color_rgba: (list) RGB color of object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_rgba</span></div>
+
+<div class="viewcode-block" id="EnvObject.set_random_texture"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.set_random_texture">[docs]</a>    <span class="k">def</span> <span class="nf">set_random_texture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_id</span><span class="p">,</span> <span class="n">patternPath</span><span class="o">=</span><span class="s2">&quot;dtd/images&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply texture to object</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param obj_id: (int) ID of object</span>
+<span class="sd">            :param patternPath: (string) relative path to *.jpg (recursive) with textures</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">currentdir</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">patternPath</span><span class="p">)))</span>
+        <span class="n">texture_paths</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pp</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">),</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">texture_paths</span> <span class="o">+=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pp</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">,</span> <span class="s1">&#39;*.png&#39;</span><span class="p">),</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">random_texture_path</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">texture_paths</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span><span class="p">:</span>
+            <span class="n">texture_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="n">random_texture_path</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="n">obj_id</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">rgbaColor</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="n">obj_id</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">textureUniqueId</span><span class="o">=</span><span class="n">texture_id</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to apply texture to obj ID:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; from path=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pp</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EnvObject.set_init_position"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.set_init_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_init_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set object&#39;s initial position in world coordinates</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param position: (list) Desired initial position ([x,y,z])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_position</span> <span class="o">=</span> <span class="n">position</span></div>
+
+<div class="viewcode-block" id="EnvObject.set_init_orientation"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.set_init_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">set_init_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set object&#39;s initial orientation in world coordinates</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param orientation: (list) Desired initial orientation (quaternion [x,y,z,w])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_orientation</span> <span class="o">=</span> <span class="n">orientation</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_position"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get object&#39;s position in world coordinates</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return position: (array) Position ([x,y,z]) of object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_position_and_orientation</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_orientation"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">get_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get object&#39;s orientation in quaterion in world coordinates</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return orientation: (array) Orientation of object (quaternion [x,y,z,w])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_position_and_orientation</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_orientation_euler"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_orientation_euler">[docs]</a>    <span class="k">def</span> <span class="nf">get_orientation_euler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get object&#39;s orientation in Euler angles in world coordinates</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return orientation: (array) Orientation of object in Euler angles (degrees)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getEulerFromQuaternion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_position_and_orientation</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_position_and_orientation"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_position_and_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">get_position_and_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get object&#39;s position and orientation in quaterion in world coordinates</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return orientation: (array) Position ([x,y,z]) Orientation of object (quaternion [x,y,z,w])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getBasePositionAndOrientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_orientation</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnvObject.set_position"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set object&#39;s position in world coordinates</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param position: (array) Position ([x,y,z]) of object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">resetBasePositionAndOrientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_orientation</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="EnvObject.set_orientation"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.set_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">set_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set object&#39;s orientation in quaterion in world coordinates</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param orientation: (array) Orientation of object in quaternion ([x,y,z,w])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">resetBasePositionAndOrientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_position</span><span class="p">(),</span> <span class="n">orientation</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnvObject.move"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">movement</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Move object to new position relative to current position</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param movement: (array) By how much to move from current position ([x,y,z])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_position</span><span class="p">,</span> <span class="n">movement</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EnvObject.rotate_euler"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.rotate_euler">[docs]</a>    <span class="k">def</span> <span class="nf">rotate_euler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rotate object to new orientation relative to current orientation in Euler angles</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param rotation: (array) By how much to rotate from current rotation (degrees)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_euler</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getEulerFromQuaternion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_orientation</span><span class="p">())</span>
+        <span class="n">next_euler</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_euler</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_orientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getQuaternionFromEuler</span><span class="p">(</span><span class="n">next_euler</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_file_path"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_file_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_file_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get path to object&#39;s model</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self.file_path: (string) Path to object&#39;s model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span></div>
+
+    <span class="k">def</span> <span class="nf">set_texture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texture</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="EnvObject.load"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load object from it&#39;s model to the scene</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self.uid: (int) ID of loaded object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">urdf_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_orientation</span><span class="p">,</span> <span class="n">useFixedBase</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fixed</span><span class="p">,</span>  <span class="n">flags</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">URDF_USE_SELF_COLLISION</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeDynamics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">collisionMargin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">contactProcessingThreshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ccdSweptSphereRadius</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_bounding_box"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_bounding_box">[docs]</a>    <span class="k">def</span> <span class="nf">get_bounding_box</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get 3D axis-aligned bounding box of object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return bounding_box: (list) Center and 8 coordinates of vertices of the bounding box</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bounding_box</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">diag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getAABB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">bounding_box</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">bounding_box</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_centroid"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_centroid">[docs]</a>    <span class="k">def</span> <span class="nf">get_centroid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get position of object&#39;s centroid</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return centeroid: (array) Position of object&#39;s centroid (center of mass) ([x,y,z])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getBasePositionAndOrientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="EnvObject.draw_bounding_box"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.draw_bounding_box">[docs]</a>    <span class="k">def</span> <span class="nf">draw_bounding_box</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw object&#39;s 3D bounding box in the scene GUI</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">diagonal_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getAABB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_lines</span><span class="p">(</span><span class="n">diagonal_points</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug_line_ids</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">addUserDebugLine</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">replaceItemUniqueId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug_line_ids</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">lineColorRGB</span><span class="o">=</span><span class="p">(</span><span class="mf">0.31</span><span class="p">,</span> <span class="mf">0.78</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">),</span> <span class="n">lineWidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug_line_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">addUserDebugLine</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">lineColorRGB</span><span class="o">=</span><span class="p">(</span><span class="mf">0.31</span><span class="p">,</span> <span class="mf">0.78</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">),</span> <span class="n">lineWidth</span> <span class="o">=</span> <span class="mi">2</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_lines"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_lines">[docs]</a>    <span class="k">def</span> <span class="nf">get_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get lines connecting vertices of 3D bounding box</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param diag: (list) Diagonal points of 3D bounding box</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :return lines: (list) List of lines connecting vertices of 3D bounding box</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])))</span>
+
+        <span class="k">return</span> <span class="n">lines</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_cuboid_dimensions"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_cuboid_dimensions">[docs]</a>    <span class="k">def</span> <span class="nf">get_cuboid_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get dimensions of cuboid defined by object&#39;s 3D bounding box</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self.cuboid_dimension: (list) Dimensions of cuboid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cuboid_dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">diag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getAABB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cuboid_dimensions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">diag</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cuboid_dimensions</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_name"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get object&#39;s name. Uses data from URDF.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self.name: (string) Object&#39;s name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_uid"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_uid">[docs]</a>    <span class="k">def</span> <span class="nf">get_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get object&#39;s unique ID</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self.uid: Object&#39;s unique ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_random_object_position"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_random_object_position">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_object_position</span><span class="p">(</span><span class="n">boarders</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate random position in defined volume</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param boarders: (list) Volume, where position may be generated ([x,x,y,y,z,z])</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :return pos: (list) Position in specified volume ([x,y,z])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">boarders</span><span class="p">):</span>
+            <span class="n">boarders</span> <span class="o">=</span> <span class="n">boarders</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">boarders</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">boarders</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">boarders</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="c1">#x</span>
+        <span class="n">pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">boarders</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">boarders</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span> <span class="c1">#y</span>
+        <span class="n">pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">boarders</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">boarders</span><span class="p">[</span><span class="mi">5</span><span class="p">]))</span> <span class="c1">#z</span>
+        <span class="k">return</span> <span class="n">pos</span></div>
+
+<div class="viewcode-block" id="EnvObject.get_random_object_orientation"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_random_object_orientation">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_object_orientation</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate random orientation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return orientation: (array) Orientation (quaternion [x,y,z,w])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angleX</span> <span class="o">=</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="n">angleY</span> <span class="o">=</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="n">angleZ</span> <span class="o">=</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pybullet</span><span class="o">.</span><span class="n">getQuaternionFromEuler</span><span class="p">([</span><span class="n">angleX</span><span class="p">,</span> <span class="n">angleY</span><span class="p">,</span> <span class="n">angleZ</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="EnvObject.get_random_color"><a class="viewcode-back" href="../../../other/env_object.html#myGym.envs.env_object.EnvObject.get_random_color">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_color</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get random color</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return color: (list) RGB color</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">color</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">color</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">color</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nikita Sokovnin.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

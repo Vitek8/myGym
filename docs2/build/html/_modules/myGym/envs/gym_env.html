@@ -1,0 +1,733 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>myGym.envs.gym_env &mdash; mygym 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/mygym_theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> mygym
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">How to</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/visualization.html">Visualize workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/basic_training.html">Train a robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/tutorial_parametric.html">Set parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/tutorial_config.html">Edit config file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/train_camera.html">Train robot - supervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/train_vae.html">Train a robot - unsupervised vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/parallel_training.html">Train in parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/train_switch.html">Train a robot - switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/tensorboard.html">Evaluate with tensorboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/test_model.html">Test trained model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">How to - advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/write_reward.html">Create custom reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/create_workspace.html">Create custom workspace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/create_network.html">Create custom network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/dataset.html">Generate dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gym</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/workspace.html">Workspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/mygym_objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/mygym_robots.html">Robots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../environments/gym_env.html">GymEnv</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Baselines</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baselines/table.html">Baseline networks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Important classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/base_env.html">BaseEnv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/robot.html">Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/task.html">Task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/reward.html">Reward</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_modules/vision.html">Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/camera.html">Camera</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/env_object.html">Object</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mygym</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>myGym.envs.gym_env</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for myGym.envs.gym_env</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">myGym.envs</span> <span class="kn">import</span> <span class="n">robot</span><span class="p">,</span> <span class="n">env_object</span>
+<span class="kn">from</span> <span class="nn">myGym.envs</span> <span class="kn">import</span> <span class="n">task</span> <span class="k">as</span> <span class="n">t</span>
+<span class="kn">from</span> <span class="nn">myGym.envs.base_env</span> <span class="kn">import</span> <span class="n">CameraEnv</span>
+<span class="kn">from</span> <span class="nn">myGym.envs.rewards</span> <span class="kn">import</span> <span class="n">DistanceReward</span><span class="p">,</span> <span class="n">ComplexDistanceReward</span><span class="p">,</span> <span class="n">SparseReward</span><span class="p">,</span> <span class="n">SwitchReward</span><span class="p">,</span> <span class="n">ButtonReward</span>
+<span class="kn">import</span> <span class="nn">pybullet</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">gym</span> <span class="kn">import</span> <span class="n">spaces</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="n">currentdir</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;envs&quot;</span><span class="p">)</span>
+<span class="n">repodir</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;current_dir=&quot;</span> <span class="o">+</span> <span class="n">currentdir</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="GymEnv"><a class="viewcode-back" href="../../../environments/gym_env.html#myGym.envs.gym_env.GymEnv">[docs]</a><span class="k">class</span> <span class="nc">GymEnv</span><span class="p">(</span><span class="n">CameraEnv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Environment class for particular environment based on myGym basic environment classes</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        :param workspace: (string) Workspace in gym, where training takes place (collabtable, maze, drawer, ...)</span>
+<span class="sd">        :param object_sampling_area: (list of floats) Volume in the scene where objects can appear ([x,x,y,y,z,z])</span>
+<span class="sd">        :param dimension_velocity: (float) Maximum allowed velocity for robot movements in individual x,y,z axis</span>
+<span class="sd">        :param used_objects: (list of strings) Names of extra objects (not task objects) that can appear in the scene</span>
+<span class="sd">        :param num_objects_range: (list of ints) Minimum and maximum number of extra objects that may appear in the scene</span>
+<span class="sd">        :param action_repeat: (int) Amount of steps the robot takes between the simulation steps (updates)</span>
+<span class="sd">        :param color_dict: (dict) Dictionary of specified colors for chosen objects, Key: object name, Value: RGB color</span>
+<span class="sd">        :param robot: (string) Type of robot to train in the environment (kuka, panda, ur3, ...)</span>
+<span class="sd">        :param robot_position: (list) Position of the robot&#39;s base link in the coordinate frame of the environment ([x,y,z])</span>
+<span class="sd">        :param robot_orientation: (list) Orientation of the robot&#39;s base link in the coordinate frame of the environment (Euler angles [x,y,z])</span>
+<span class="sd">        :param robot_action: (string) Mechanism of robot control (absolute, step, joints)</span>
+<span class="sd">        :param robot_init_joint_poses: (list) Configuration in which robot will be initialized in the environment. Specified either in joint space as list of joint poses or in the end-effector space as [x,y,z] coordinates.</span>
+<span class="sd">        :param task_type: (string) Type of learned task (reach, push, ...)</span>
+<span class="sd">        :param num_subgoals: (int) Number of subgoals in task</span>
+<span class="sd">        :param task_objects: (list of strings) Objects that are relevant for performing the task</span>
+<span class="sd">        :param reward_type: (string) Type of reward signal source (gt, 3dvs, 2dvu)</span>
+<span class="sd">        :param reward: (string) Defines how to compute the reward</span>
+<span class="sd">        :param distance_type: (string) Way of calculating distances (euclidean, manhattan)</span>
+<span class="sd">        :param active_cameras: (int) The number of camera used to render and record images</span>
+<span class="sd">        :param dataset: (bool) Whether this environment serves for image dataset generation</span>
+<span class="sd">        :param obs_space: (string) Type of observation data. Specify &quot;dict&quot; for usage of HER training algorithm.</span>
+<span class="sd">        :param visualize: (bool) Whether to show helping visualization during training and testing of environment</span>
+<span class="sd">        :param visgym: (bool) Whether to visualize whole gym building and other tasks (final visualization)</span>
+<span class="sd">        :param logdir: (string) Directory for logging</span>
+<span class="sd">        :param vae_path: (string) Path to a trained VAE in 2dvu reward type</span>
+<span class="sd">        :param yolact_path: (string) Path to a trained Yolact in 3dvu reward type</span>
+<span class="sd">        :param yolact_config: (string) Path to saved Yolact config obj or name of an existing one in the data/Config script or None for autodetection</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">workspace</span><span class="o">=</span><span class="s2">&quot;table&quot;</span><span class="p">,</span>
+                 <span class="n">object_sampling_area</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">dimension_velocity</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+                 <span class="n">used_objects</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">num_objects_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">action_repeat</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">color_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">robot</span><span class="o">=</span><span class="s1">&#39;kuka&#39;</span><span class="p">,</span>
+                 <span class="n">robot_position</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                 <span class="n">robot_orientation</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                 <span class="n">robot_action</span><span class="o">=</span><span class="s2">&quot;step&quot;</span><span class="p">,</span>
+                 <span class="n">robot_init_joint_poses</span><span class="o">=</span><span class="p">[],</span>
+                 <span class="n">task_type</span><span class="o">=</span><span class="s1">&#39;reach&#39;</span><span class="p">,</span>
+                 <span class="n">num_subgoals</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">task_objects</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;virtual_cube_holes&quot;</span><span class="p">],</span>
+                 <span class="n">reward_type</span><span class="o">=</span><span class="s1">&#39;gt&#39;</span><span class="p">,</span>
+                 <span class="n">reward</span> <span class="o">=</span> <span class="s1">&#39;distance&#39;</span><span class="p">,</span>
+                 <span class="n">distance_type</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>
+                 <span class="n">active_cameras</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">dataset</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">obs_space</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">visualize</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">visgym</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">logdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">vae_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">yolact_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">yolact_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span>
+                 <span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span> <span class="o">=</span> <span class="n">workspace</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_type</span> <span class="o">=</span> <span class="n">robot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_position</span> <span class="o">=</span> <span class="n">robot_position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_orientation</span> <span class="o">=</span> <span class="n">robot_orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_init_joint_poses</span> <span class="o">=</span> <span class="n">robot_init_joint_poses</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_action</span> <span class="o">=</span> <span class="n">robot_action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimension_velocity</span> <span class="o">=</span> <span class="n">dimension_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_cameras</span> <span class="o">=</span> <span class="n">active_cameras</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span> <span class="o">=</span> <span class="n">object_sampling_area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_objects</span> <span class="o">=</span> <span class="n">used_objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_repeat</span> <span class="o">=</span> <span class="n">action_repeat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_objects_range</span> <span class="o">=</span> <span class="n">num_objects_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span> <span class="o">=</span> <span class="n">color_dict</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">=</span> <span class="n">task_type</span>
+        <span class="k">if</span> <span class="n">dataset</span><span class="p">:</span>
+            <span class="n">task_objects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_objects_names</span> <span class="o">=</span> <span class="n">task_objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reward_type</span> <span class="o">=</span> <span class="n">reward_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distance_type</span> <span class="o">=</span> <span class="n">distance_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">TaskModule</span><span class="p">(</span><span class="n">task_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_type</span><span class="p">,</span>
+                                 <span class="n">num_subgoals</span><span class="o">=</span><span class="n">num_subgoals</span><span class="p">,</span>
+                                 <span class="n">task_objects</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task_objects_names</span><span class="p">,</span>
+                                 <span class="n">reward_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reward_type</span><span class="p">,</span>
+                                 <span class="n">vae_path</span><span class="o">=</span><span class="n">vae_path</span><span class="p">,</span>
+                                 <span class="n">yolact_path</span><span class="o">=</span><span class="n">yolact_path</span><span class="p">,</span>
+                                 <span class="n">yolact_config</span><span class="o">=</span><span class="n">yolact_config</span><span class="p">,</span>
+                                 <span class="n">distance_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">distance_type</span><span class="p">,</span>
+                                 <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">reward</span> <span class="o">==</span> <span class="s1">&#39;distance&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="n">DistanceReward</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">reward</span> <span class="o">==</span> <span class="s2">&quot;complex_distance&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="n">ComplexDistanceReward</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">reward</span> <span class="o">==</span> <span class="s1">&#39;sparse&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="n">SparseReward</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">reward</span> <span class="o">==</span> <span class="s1">&#39;switch&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;switch&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="n">SwitchReward</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">reward</span> <span class="o">==</span> <span class="s1">&#39;btn&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;btn&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="n">ButtonReward</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_space</span> <span class="o">=</span> <span class="n">obs_space</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualize</span> <span class="o">=</span> <span class="n">visualize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visgym</span> <span class="o">=</span> <span class="n">visgym</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logdir</span> <span class="o">=</span> <span class="n">logdir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span> <span class="o">=</span>  <span class="p">{</span><span class="s1">&#39;baskets&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;baskets.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;baskets.jpg&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="mf">3.18</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.49</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.56</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.71</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">3.99</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.43</span><span class="p">,</span> <span class="mf">0.67</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.76</span><span class="p">,</span> <span class="mf">2.68</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.54</span><span class="p">,</span> <span class="mf">1.19</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.53</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.62</span><span class="p">,</span> <span class="mf">0.59</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.24</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.95</span><span class="p">,</span> <span class="mf">0.83</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.28</span><span class="p">,</span> <span class="mf">2.53</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.53</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">]},</span> 
+                                <span class="s1">&#39;collabtable&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;collabtable.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;collabtable.jpg&#39;</span><span class="p">,</span> 
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="mf">0.45</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.35</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">3.24</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.44</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.34</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.35</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.32</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.56</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.27</span><span class="p">,</span> <span class="mf">0.42</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.21</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.42</span><span class="p">,</span> <span class="mf">2.03</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]},</span> 
+                                <span class="s1">&#39;darts&#39;</span><span class="p">:</span>    <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;darts.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;darts.jpg&#39;</span><span class="p">,</span> 
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.6</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">4.9</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.6</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">]},</span> 
+                                <span class="s1">&#39;drawer&#39;</span><span class="p">:</span>   <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;drawer.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;drawer.jpg&#39;</span><span class="p">,</span> 
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">4.81</span><span class="p">,</span> <span class="mf">1.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.14</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.63</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.14</span><span class="p">,</span> <span class="mf">3.04</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.56</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.92</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.41</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.88</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.14</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.92</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.14</span><span class="p">,</span> <span class="mf">2.33</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.71</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.28</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.84</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]},</span> 
+                                <span class="s1">&#39;football&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;football.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;football.jpg&#39;</span><span class="p">,</span> 
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="mf">4.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.7</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.9</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.05</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">]},</span> 
+                                <span class="s1">&#39;fridge&#39;</span><span class="p">:</span>   <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;fridge.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;fridge.jpg&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="mf">1.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.95</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.35</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9</span><span class="p">]},</span> 
+                                <span class="s1">&#39;maze&#39;</span><span class="p">:</span>     <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;maze.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;maze.jpg&#39;</span><span class="p">,</span> 
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="mf">6.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">5.9</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.7</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.7</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.9</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.65</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">4.7</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]},</span> 
+                                <span class="s1">&#39;stairs&#39;</span><span class="p">:</span>   <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;stairs.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;stairs.jpg&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">5.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.08</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.20</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.04</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.64</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.81</span><span class="p">,</span> <span class="mf">3.49</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.93</span><span class="p">,</span> <span class="mf">1.76</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.14</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">1.24</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.18</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.12</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.81</span><span class="p">,</span> <span class="mf">2.99</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.82</span><span class="p">,</span> <span class="mf">1.57</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.15</span><span class="p">,</span> <span class="mf">0.43</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.17</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]},</span>
+                                <span class="s1">&#39;table&#39;</span><span class="p">:</span>    <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;table.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;table.jpg&#39;</span><span class="p">,</span> 
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">],</span>
+                                                                    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.88</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.88</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.898</span><span class="p">,</span> <span class="mf">1.28</span><span class="p">],</span>
+                                                                   <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.898</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]},</span> 
+                                <span class="s1">&#39;verticalmaze&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;urdf&#39;</span><span class="p">:</span> <span class="s1">&#39;verticalmaze.urdf&#39;</span><span class="p">,</span> <span class="s1">&#39;texture&#39;</span><span class="p">:</span> <span class="s1">&#39;verticalmaze.jpg&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;transform&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">5.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.55</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
+                                            <span class="s1">&#39;robot&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span> 
+                                            <span class="s1">&#39;camera&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.35</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.7</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]],</span> 
+                                                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">]]},</span>
+                                            <span class="s1">&#39;boarders&#39;</span><span class="p">:[</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">]}</span>  <span class="p">}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GymEnv</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">active_cameras</span><span class="o">=</span><span class="n">active_cameras</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_setup_scene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set-up environment scene. Load static objects, apply textures. Load robot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span>
+        <span class="c1"># Floor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_scene_object_uid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;/envs/rooms/plane.urdf&quot;</span><span class="p">),</span>
+                                        <span class="n">transform</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getQuaternionFromEuler</span><span class="p">(</span><span class="n">transform</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">]),</span><span class="n">useFixedBase</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">useMaximalCoordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;floor&quot;</span><span class="p">)</span>
+        <span class="c1"># Visualize gym background objects</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">visgym</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_scene_object_uid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span>
+                    <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;/envs/rooms/room.urdf&quot;</span><span class="p">),</span>
+                                                <span class="n">transform</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getQuaternionFromEuler</span><span class="p">(</span><span class="n">transform</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">]),</span><span class="n">useFixedBase</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">useMaximalCoordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s2">&quot;gym&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">workspace</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">workspace</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_add_scene_object_uid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span>
+                        <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;/envs/rooms/visual/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;urdf&#39;</span><span class="p">]),</span>
+                                                    <span class="n">transform</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getQuaternionFromEuler</span><span class="p">(</span><span class="n">transform</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">]),</span><span class="n">useFixedBase</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">useMaximalCoordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">workspace</span><span class="p">)</span>
+        <span class="c1"># Load selected workspace</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_scene_object_uid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span>
+            <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;/envs/rooms/collision/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;urdf&#39;</span><span class="p">]),</span>
+                                            <span class="n">transform</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getQuaternionFromEuler</span><span class="p">(</span><span class="n">transform</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">]),</span><span class="n">useFixedBase</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">useMaximalCoordinates</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">)</span>
+        <span class="c1"># Add textures</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">reward_type</span> <span class="o">!=</span> <span class="s2">&quot;2dvu&quot;</span><span class="p">:</span>
+             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;texture&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                 <span class="n">workspace_texture_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span>
+                     <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;/envs/textures/&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;texture&#39;</span><span class="p">]))</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_scene_object_uid_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                                             <span class="n">rgbaColor</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">textureUniqueId</span><span class="o">=</span><span class="n">workspace_texture_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+             <span class="n">workspace_texture_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span>
+                                                <span class="s2">&quot;/envs/textures/grey.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_scene_object_uid_by_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                                     <span class="n">rgbaColor</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">textureUniqueId</span><span class="o">=</span><span class="n">workspace_texture_id</span><span class="p">)</span>
+        <span class="n">floor_texture_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span>
+            <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="s2">&quot;myGym&quot;</span><span class="p">,</span> <span class="s2">&quot;/envs/textures/parquet1.jpg&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_scene_object_uid_by_name</span><span class="p">(</span><span class="s2">&quot;floor&quot;</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                                         <span class="n">rgbaColor</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">textureUniqueId</span><span class="o">=</span><span class="n">floor_texture_id</span><span class="p">)</span>
+        <span class="c1"># Define boarders</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;boarders&#39;</span><span class="p">]</span>
+        <span class="c1"># Add robot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">Robot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_type</span><span class="p">,</span>
+                                 <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;robot&#39;</span><span class="p">][</span><span class="s1">&#39;position&#39;</span><span class="p">],</span>
+                                 <span class="n">orientation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;robot&#39;</span><span class="p">][</span><span class="s1">&#39;orientation&#39;</span><span class="p">],</span>
+                                 <span class="n">init_joint_poses</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_init_joint_poses</span><span class="p">,</span>
+                                 <span class="n">robot_action</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_action</span><span class="p">,</span>
+                                 <span class="n">dimension_velocity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension_velocity</span><span class="p">,</span>
+                                 <span class="n">pybullet_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+        <span class="c1"># Add human                         </span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace</span> <span class="o">==</span> <span class="s1">&#39;collabtable&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">human</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">Robot</span><span class="p">(</span><span class="s1">&#39;human&#39;</span><span class="p">,</span>
+                                 <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;robot&#39;</span><span class="p">][</span><span class="s1">&#39;position&#39;</span><span class="p">],</span>
+                                 <span class="n">orientation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;robot&#39;</span><span class="p">][</span><span class="s1">&#39;orientation&#39;</span><span class="p">],</span>
+                                 <span class="n">init_joint_poses</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">robot_init_joint_poses</span><span class="p">,</span>
+                                 <span class="n">robot_action</span><span class="o">=</span><span class="s1">&#39;joints&#39;</span><span class="p">,</span>
+                                 <span class="n">dimension_velocity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension_velocity</span><span class="p">,</span>
+                                 <span class="n">pybullet_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_observation_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set observation space type, dimensions and range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_space</span> <span class="o">==</span> <span class="s2">&quot;dict&quot;</span><span class="p">:</span>
+            <span class="n">goaldim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">obsdim</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">obsdim</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">obsdim</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Dict</span><span class="p">({</span><span class="s2">&quot;observation&quot;</span><span class="p">:</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">obsdim</span><span class="p">,)),</span>
+                                                  <span class="s2">&quot;achieved_goal&quot;</span><span class="p">:</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">goaldim</span><span class="p">,)),</span>
+                                                  <span class="s2">&quot;desired_goal&quot;</span><span class="p">:</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">goaldim</span><span class="p">,))})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">observationDim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">obsdim</span>
+            <span class="n">observation_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="n">observationDim</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">observation_space</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="o">-</span><span class="n">observation_high</span><span class="p">,</span>
+                                                <span class="n">observation_high</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_action_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set action space dimensions and range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_action_dimension</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot_action</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="s2">&quot;joints_step&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">action_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">action_dim</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">action_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">action_dim</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot_action</span> <span class="o">==</span> <span class="s2">&quot;absolute&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span><span class="p">):</span>
+                <span class="n">boarders_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">boarders_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">boarders_min</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">boarders_max</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">action_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">7</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot_action</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;joints&quot;</span><span class="p">,</span> <span class="s2">&quot;joints_gripper&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">action_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">joints_limits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">action_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">joints_limits</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_space</span> <span class="o">=</span> <span class="n">spaces</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">action_dim</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">action_dim</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_rescale_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rescale action returned by trained model to fit environment action space</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param action: (list) Action data returned by trained model</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :return rescaled_action: (list) Rescaled action to environment action space</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="n">sub</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">l</span> <span class="k">for</span> <span class="n">sub</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_high</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="GymEnv.reset"><a class="viewcode-back" href="../../../environments/gym_env.html#myGym.envs.gym_env.GymEnv.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">random_pos</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_robot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Environment reset called at the beginning of an episode. Reset state of objects, robot, task and reward.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param random_pos: (bool) Whether to initiate objects to random locations in the scene</span>
+<span class="sd">            :param hard: (bool) Whether to do hard reset (resets whole pybullet scene)</span>
+<span class="sd">            :param random_robot: (bool) Whether to initiate robot in random pose</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self._observation: (list) Observation data of the environment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">hard</span><span class="o">=</span><span class="n">hard</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">env_objects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">used_objects</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_objects_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">num_objects</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_objects_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_objects_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">num_objects</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">used_objects</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">env_objects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_randomly_place_objects</span><span class="p">(</span><span class="n">num_objects</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">used_objects</span><span class="p">,</span> <span class="n">random_pos</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_type</span> <span class="o">==</span> <span class="s1">&#39;push&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_randomly_place_objects</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">task_objects_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">random_pos</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_randomly_place_objects</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">task_objects_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">random_pos</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_position</span><span class="p">())</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_position</span><span class="p">())</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">direction</span><span class="o">/</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
+            <span class="n">init_joint_poses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_position</span><span class="p">())</span> <span class="o">+</span> <span class="n">direction</span>
+            <span class="n">init_joint_poses</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.42</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">]</span>            
+            <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">init_joint_poses</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">_calculate_accurate_IK</span><span class="p">(</span><span class="n">init_joint_poses</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">obj_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_objects_names</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_randomly_place_objects</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">obj_name</span><span class="p">],</span> <span class="n">random_pos</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env_objects</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">random_robot</span><span class="o">=</span><span class="n">random_robot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">reset_task</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reward</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_observation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_observation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prev_gripper_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_observation</span><span class="p">()[:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observation</span></div>
+
+    <span class="k">def</span> <span class="nf">_set_cameras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add cameras to the environment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">camera_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workspace_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">workspace</span><span class="p">][</span><span class="s1">&#39;camera&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">cam_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">camera_args</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">])):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_camera</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">camera_args</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">][</span><span class="n">cam_idx</span><span class="p">],</span> <span class="n">target_position</span><span class="o">=</span><span class="n">camera_args</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">][</span><span class="n">cam_idx</span><span class="p">],</span> <span class="n">distance</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">is_absolute_position</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GymEnv.get_observation"><a class="viewcode-back" href="../../../environments/gym_env.html#myGym.envs.gym_env.GymEnv.get_observation">[docs]</a>    <span class="k">def</span> <span class="nf">get_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get observation data from the environment</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :return observation: (array) Represented position of task relevant objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_space</span> <span class="o">==</span> <span class="s2">&quot;dict&quot;</span><span class="p">:</span>
+            <span class="n">observation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">get_observation</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward_type</span> <span class="o">!=</span> <span class="s2">&quot;2dvu&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_observation</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;observation&quot;</span><span class="p">:</span> <span class="n">observation</span><span class="p">,</span>
+                                     <span class="s2">&quot;achieved_goal&quot;</span><span class="p">:</span> <span class="n">observation</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span>
+                                     <span class="s2">&quot;desired_goal&quot;</span><span class="p">:</span> <span class="n">observation</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_observation</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;observation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">get_observation</span><span class="p">(),</span>
+                                     <span class="s2">&quot;achieved_goal&quot;</span><span class="p">:</span> <span class="n">observation</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span>
+                                     <span class="s2">&quot;desired_goal&quot;</span><span class="p">:</span> <span class="n">observation</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">):]}</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observation</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">observation</span><span class="p">[</span><span class="s2">&quot;task_objects&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">get_observation</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">observation</span><span class="p">[</span><span class="s2">&quot;camera_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rgb_array&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">observation</span><span class="p">[</span><span class="s2">&quot;objects&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env_objects</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation</span><span class="p">[</span><span class="s2">&quot;task_objects&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="GymEnv.step"><a class="viewcode-back" href="../../../environments/gym_env.html#myGym.envs.gym_env.GymEnv.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Environment step in simulation</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param actions: (list) Action data to send to robot to perform movement in this step</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :return self._observation: (list) Observation data from the environment after this step</span>
+<span class="sd">            :return reward: (float) Reward value assigned to this step</span>
+<span class="sd">            :return done: (bool) Whether this stop is episode&#39;s final</span>
+<span class="sd">            :return info: (dict) Additional information about step</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rescale_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_action_robot</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_observation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_observation</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">:</span>
+            <span class="n">reward</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">observation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_observation</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reward</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">reward</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">episode_reward</span> <span class="o">+=</span> <span class="n">reward</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">check_goal</span><span class="p">()</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">episode_over</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">last_distance</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">init_distance</span><span class="p">,</span>
+                    <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">episode_failed</span><span class="p">)}</span>
+
+        <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">episode_final_reward</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">episode_reward</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">episode_final_distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">last_distance</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">init_distance</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">episode_number</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_episode_summary</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span></div>
+
+    <span class="k">def</span> <span class="nf">compute_reward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">achieved_goal</span><span class="p">,</span> <span class="n">desired_goal</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="c1">#@TODO: Reward computation for HER, argument for .compute()</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">achieved_goal</span><span class="p">,</span> <span class="n">desired_goal</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">reward</span>
+
+    <span class="k">def</span> <span class="nf">_apply_action_robot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply desired action to robot in simulation</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param action: (list) Action data returned by trained model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">action_repeat</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;human&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">human</span><span class="o">.</span><span class="n">apply_action</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">human</span><span class="o">.</span><span class="n">joints_limits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">human</span><span class="o">.</span><span class="n">joints_limits</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">episode_steps</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="GymEnv.draw_bounding_boxes"><a class="viewcode-back" href="../../../environments/gym_env.html#myGym.envs.gym_env.GymEnv.draw_bounding_boxes">[docs]</a>    <span class="k">def</span> <span class="nf">draw_bounding_boxes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show bounding box of object in the scene in GUI</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="nb">object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">env_objects</span><span class="p">:</span>
+            <span class="nb">object</span><span class="o">.</span><span class="n">draw_bounding_box</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_randomly_place_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">object_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_pos</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">1.2</span><span class="p">],</span> <span class="n">orn</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Place dynamic objects to the scene randomly</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param n: (int) Number of objects to place in the scene</span>
+<span class="sd">            :param object_names: (list of strings) Objects that may be placed to the scene</span>
+<span class="sd">            :param random_pos: (bool) Whether to place object to random positions in the scene</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :return env_objects: (list of objects) Objects that are present in the current scene</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">env_objects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">objects_filenames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_random_urdf_filenames</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">object_names</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">object_filename</span> <span class="ow">in</span> <span class="n">objects_filenames</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">random_pos</span><span class="p">:</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">env_object</span><span class="o">.</span><span class="n">EnvObject</span><span class="o">.</span><span class="n">get_random_object_position</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">objects_area_boarders</span><span class="p">)</span>
+                <span class="c1">#orn = env_object.EnvObject.get_random_object_orientation()</span>
+                <span class="n">orn</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">fixed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="s2">&quot;crate&quot;</span><span class="p">,</span> <span class="s2">&quot;bin&quot;</span><span class="p">,</span> <span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="s2">&quot;trash&quot;</span><span class="p">,</span> <span class="s2">&quot;switch&quot;</span><span class="p">,</span> <span class="s2">&quot;btn&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">object_filename</span><span class="p">:</span>
+                    <span class="n">fixed</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.05</span>
+            <span class="nb">object</span> <span class="o">=</span> <span class="n">env_object</span><span class="o">.</span><span class="n">EnvObject</span><span class="p">(</span><span class="n">object_filename</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">orn</span><span class="p">,</span> <span class="n">pybullet_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="n">fixed</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span><span class="p">:</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_of_object</span><span class="p">(</span><span class="nb">object</span><span class="p">))</span>
+            <span class="n">env_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">env_objects</span>
+
+<div class="viewcode-block" id="GymEnv.color_of_object"><a class="viewcode-back" href="../../../environments/gym_env.html#myGym.envs.gym_env.GymEnv.color_of_object">[docs]</a>    <span class="k">def</span> <span class="nf">color_of_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set object&#39;s color</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            :param object: (object) Object</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            :return color: (list) RGB color</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">object</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">env_object</span><span class="o">.</span><span class="n">EnvObject</span><span class="o">.</span><span class="n">get_random_color</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span><span class="p">[</span><span class="nb">object</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span><span class="p">[</span><span class="nb">object</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">color</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">/</span> <span class="mi">255</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">color</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">color</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nikita Sokovnin.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

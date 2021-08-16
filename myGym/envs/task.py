@@ -187,7 +187,7 @@ class TaskModule():
 
     def check_press_threshold(self):
         self.pressed = self.env.reward.is_pressed()
-        if self.pressed >= 1.7188739708837175:
+        if self.pressed >= 1.71:
             return True
         else:
             return False
@@ -253,7 +253,7 @@ class TaskModule():
         elif self.task_type == "switch":
             if self.check_switch_threshold():
                 self.env.episode_over = True
-                self.env.episode_info = None
+                self.env.episode_info = "Task completed successfully"
 
             elif self.env.episode_steps == self.env.max_steps:
                 self.env.episode_over = True
@@ -263,7 +263,7 @@ class TaskModule():
         elif self.task_type == "press":
             if self.check_press_threshold():
                 self.env.episode_over = True
-                self.env.episode_info = None
+                self.env.episode_info = "Task completed successfully"
 
             elif self.env.episode_steps == self.env.max_steps:
                 self.env.episode_over = True

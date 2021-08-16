@@ -16,7 +16,6 @@ class Vector:
 
     ### self modifiers:
 
-
     def set_len(self, len):
         self.multiply(1/self.norm)
         self.multiply(len)
@@ -38,10 +37,10 @@ class Vector:
     def move_to_origin(self, vector):
         a = vector[1][0] - vector[0][0]
         b = vector[1][1] - vector[0][1]
-        c = vector[1][2] - vector[0][2]       
-        
+        c = vector[1][2] - vector[0][2]
+
         return np.array([a, b, c])
-    
+
     def visualize(self, origin=[0, 0, 0], color=(0, 0, 0), time=0.1):
 
         self.env.p.addUserDebugLine(origin, np.add(np.array(origin), np.array(self.vector)), lineColorRGB=color, lineWidth=1, lifeTime=time)
@@ -55,7 +54,7 @@ class Vector:
         self.vector = r
 
     def rotate_with_matrix(self, matrix):
-        self.vector = matrix.dot(self.vector) 
+        self.vector = matrix.dot(self.vector)
 
     ### interactive:
 

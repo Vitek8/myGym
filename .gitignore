@@ -14,3 +14,4 @@ build/
 **/.directory
 /vae_datasets/
 /docs2
+myGym/__init__.py

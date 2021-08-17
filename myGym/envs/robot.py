@@ -191,8 +191,6 @@ class Robot:
             joints_max_velo.append(self.max_velocity if self.max_velocity else joint_info[11])
         return [joints_limits_l, joints_limits_u], joints_ranges, joints_rest_poses, joints_max_force, joints_max_velo
 
-
-
     def get_action_dimension(self):
         """
         Get dimension of action data, based on robot control mechanism
@@ -206,6 +204,9 @@ class Robot:
             return 3
 
     def observe_all_links(self):
+        """
+        Get position of all robot's links
+        """
         observation = []
         for link in range(self.end_effector_index+1):
             state = self.p.getLinkState(self.robot_uid, link)
@@ -236,6 +237,26 @@ class Robot:
         orn = self.p.getEulerFromQuaternion(state[1])
 
         observation.extend(list(pos))
+        return observation
+
+    def get_links_observation(self, num):
+        """
+        Get robot part of observation data
+
+        Returns: 
+            :return observation: (list) Position of all links (center of mass)
+        """
+        observation = []
+        if "kuka" in self.name:
+            for link in range(self.gripper_index-num, self.gripper_index):  
+            # for link in range(4, self.gripper_index):  
+                state = self.p.getLinkState(self.robot_uid, link)
+                pos = state[0]
+                observation.extend(list(pos))
+        else:
+            exit("not implemented for other arms than kuka")
+
+        self.observed_links_num = num
         return observation
 
     def get_position(self):

@@ -1,4 +1,3 @@
-import math
 from myGym.envs.vision_module import VisionModule
 import matplotlib.pyplot as plt
 import pybullet as p
@@ -8,6 +7,7 @@ import pkg_resources
 import cv2
 import random
 from scipy.spatial.distance import cityblock
+import math
 currentdir = pkg_resources.resource_filename("myGym", "envs")
 
 
@@ -41,7 +41,7 @@ class TaskModule():
         self.current_norm_distance = None
         self.stored_observation = []
         self.fig = None
-        self.threshold = 0.2  # distance threshold for successful task completion
+        self.threshold = 0.1 # distance threshold for successful task completion
         self.obsdim = (len(env.task_objects_names) + 1) * 3
         self.angle = None
         self.prev_angle = None
@@ -127,6 +127,10 @@ class TaskModule():
                 obj_positions.append(self.vision_module.get_obj_position(env_object,self.image,self.depth))
                 if self.reward_type == '6dvs' and self.task_type != 'reach' and env_object != self.env.task_objects[-1]:
                     obj_orientations.append(self.vision_module.get_obj_orientation(env_object,self.image))
+        
+        if self.env.has_distractor:
+            obj_positions.append(self.env.robot.get_links_observation(self.env.observed_links_num))
+        
         obj_positions[len(obj_orientations):len(obj_orientations)] = obj_orientations
         self._observation = np.array(sum(obj_positions, []))
         return self._observation
@@ -192,7 +196,21 @@ class TaskModule():
         else:
             return False
 
-    def check_distance_threshold(self, observation):
+    # def check_distance_threshold(self, observation):
+    #     """
+    #     Check if the distance between relevant task objects is under threshold for successful task completion
+
+    #     Returns:
+    #         :return: (bool)
+    #     """
+    #     observation = observation["observation"] if isinstance(observation, dict) else observation
+    #     o1 = observation[0:int(len(observation[:-3])/2)] if self.reward_type == "2dvu" else observation[0:3]
+    #     o2 = observation[int(len(observation[:-3])/2):-3]if self.reward_type == "2dvu" else observation[3:6]
+    #     self.current_norm_distance = self.calc_distance(o1, o2)
+    #     return self.current_norm_distance < self.threshold
+
+
+    def check_poke_threshold(self, observation):
         """
         Check if the distance between relevant task objects is under threshold for successful task completion
 
@@ -200,10 +218,37 @@ class TaskModule():
             :return: (bool)
         """
         observation = observation["observation"] if isinstance(observation, dict) else observation
-        o1 = observation[0:int(len(observation[:-3])/2)] if self.reward_type == "2dvu" else observation[0:3]
-        o2 = observation[int(len(observation[:-3])/2):-3]if self.reward_type == "2dvu" else observation[3:6]
-        self.current_norm_distance = self.calc_distance(o1, o2)
+        goal  = observation[0:3]
+        poker = observation[3:6]
+        self.current_norm_distance = self.calc_distance(goal, poker)
+        return self.current_norm_distance < 0.05
+
+
+    def check_distance_threshold(self, observation):
+        """
+        Check if the distance between relevant task objects is under threshold for successful task completion
+            Jonášova verze
+        Returns:
+            :return: (bool)
+        """
+        observation = observation["observation"] if isinstance(observation, dict) else observation
+        # goal is first in obs and griper is last (always)
+        goal = observation[0:3]
+        gripper = observation[-4:-1]
+        self.current_norm_distance = self.calc_distance(goal, gripper)
         return self.current_norm_distance < self.threshold
+
+    def check_distractor_distance_threshold(self, goal, gripper):
+        """
+        Check if the distance between relevant task objects is under threshold for successful task completion
+
+        Returns:
+            :return: (bool)
+        """
+        self.current_norm_distance = self.calc_distance(goal, gripper)
+        threshold = 0.1
+        return self.current_norm_distance < threshold
+
 
     def check_points_distance_threshold(self): 
         if (self.task_type == 'pnp') and (self.env.robot_action != 'joints_gripper') and (len(self.env.robot.magnetized_objects) == 0):
@@ -231,7 +276,18 @@ class TaskModule():
         if self.init_distance is None:
             self.init_distance = self.current_norm_distance
         contacts = self.check_points_distance_threshold()
-        
+        finished = None
+        tasks = ["switch", "press"]
+        if self.task_type == 'reach':
+            finished = self.check_distance_threshold(self._observation)
+        if self.task_type == 'push' or self.task_type == 'throw' or self.task_type == 'pick_n_place':
+            finished = self.check_points_distance_threshold()
+        if self.task_type == 'poke':
+            finished = self.check_poke_threshold(self._observation)
+        if self.task_type == "switch":
+            finished = self.check_switch_threshold()
+        if self.task_type == "press":
+            finished = self.check_press_threshold()
         if self.task_type == 'pnp' and self.env.robot_action != 'joints_gripper' and contacts:
             if len(self.env.robot.magnetized_objects) == 0:
                 self.env.episode_over = False
@@ -249,41 +305,27 @@ class TaskModule():
                 self.env.robot.magnetize_object(self.env.task_objects[self.obs_sub[self.sub_idx][0]], contacts) #magnetize first object
                 self.sub_idx += 1 #continue with next subgoal
                 self.env.reward.reset() #reward reset
-
-        elif self.task_type == "switch":
-            if self.check_switch_threshold():
+        elif finished:
+            if self.check_distance_threshold(self._observation):
                 self.env.episode_over = True
-                self.env.episode_info = "Task completed successfully"
-
-            elif self.env.episode_steps == self.env.max_steps:
+                if self.env.episode_steps == 1:
+                    self.env.episode_info = "Task completed in initial configuration"
+                else:
+                    self.env.episode_info = "Task completed successfully"
+            elif self.task_type in tasks:
                 self.env.episode_over = True
-                self.env.episode_failed = True
-                self.env.episode_info = "Max amount of steps reached"
-
-        elif self.task_type == "press":
-            if self.check_press_threshold():
-                self.env.episode_over = True
-                self.env.episode_info = "Task completed successfully"
-
-            elif self.env.episode_steps == self.env.max_steps:
-                self.env.episode_over = True
-                self.env.episode_failed = True
-                self.env.episode_info = "Max amount of steps reached"
-
-        elif contacts: #threshold for successful push/throw/pick'n'place
-            self.env.episode_over = True
-            if self.env.episode_steps == 1:
-                self.env.episode_info = "Task completed in initial configuration"
-            else:
-                self.env.episode_info = "Task completed successfully"
-        elif self.check_time_exceeded():
+                if self.env.episode_steps == 1:
+                    self.env.episode_info = "Task completed in initial configuration"
+                else:
+                    self.env.episode_info = "Task completed successfully"
+        if self.check_time_exceeded():
             self.env.episode_over = True
             self.env.episode_failed = True
-        elif self.env.episode_steps == self.env.max_steps:
+        if self.env.episode_steps == self.env.max_steps:
             self.env.episode_over = True
             self.env.episode_failed = True
             self.env.episode_info = "Max amount of steps reached"
-        elif self.reward_type != 'gt' and (self.check_vision_failure()):
+        if self.reward_type != 'gt' and (self.check_vision_failure()):
             self.stored_observation = []
             self.env.episode_over = True
             self.env.episode_failed = True
